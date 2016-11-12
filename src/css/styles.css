@@ -1,5 +1,7 @@
 body {
   font: 10px sans-serif;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .group-tick line {
@@ -26,4 +28,32 @@ body {
 .selected path{
     stroke-width: 5px;
     stroke: black;
+}
+
+
+.links line {
+    stroke: #999;
+    stroke-opacity: 0.6;
+    transition: opacity 0.6s, stroke-opacity 0.6s;
+}
+
+.links line.selected {
+    stroke-opacity: 0.7;
+}
+
+.nodes circle {
+    stroke: #fff;
+    stroke-width: 1.5px;
+    transition: opacity 0.6s, stroke-opacity 0.6s;
+}
+
+.nodes circle.selected {
+
+}
+
+.nodes circle.not-selected, .links line.not-selected {
+    /*fill: lightgrey;*/
+    /*stroke: lightgrey;*/
+    stroke-opacity: 0.3;
+    opacity: 0.3;
 }

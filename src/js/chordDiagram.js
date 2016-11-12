@@ -1,29 +1,4 @@
-d3.csv("../../data/transfer2008-2009.csv", function(error, csvData){
-  buildChord(csvData);
-});
-
-function buildChord(csvData){
-  //Data matrix
-  var transferMatrix = [];
-  var leagues = [];
-
-  var i = 0;
-  csvData.forEach(function(d){
-    var item = [];
-    for(k in d){
-      if(i==0){
-      leagues.push(k+"");
-      }
-
-      item.push(d[k]*1000);
-    }
-    i++;
-    transferMatrix.push(item);
-  });
-
-  console.log(leagues);
-  var matrix = transferMatrix;
-
+function buildChord(leagues, matrix){
   // get the svg.
   var svg = d3.select("#chordSVG");
 
@@ -46,13 +21,6 @@ function buildChord(csvData){
   var ribbon = d3.ribbon()
       .radius(innerRadius);
 
-  /*
-    Color scale.
-   */
-  var color = d3.scaleOrdinal()
-      .domain(d3.range(11))
-      .range(["#234928", "#AFDD89", "#957244", "#F26223", "#011227", "#C34222", "#F11223", "#A26229", "#807652", "#640928", "#E78271"]);
-
   var g = svg.append("g")
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
       .datum(chord(matrix));
@@ -68,11 +36,10 @@ function buildChord(csvData){
 
   group.append("path")
     .style("fill", function(d){
-      console.log(d.index);
-      return color(d.index);
+      return utils.color(d.index);
     })
     .style("stroke", function(d){
-      return d3.rgb(color(d.index)).darker();
+      return d3.rgb(utils.color(d.index)).darker();
     })
     .attr("d", arc);
 
@@ -134,10 +101,10 @@ function buildChord(csvData){
     .enter().append("path")
     .attr("d", ribbon)
     .style("fill", function(d){
-      return color(d.target.index);
+      return utils.color(d.target.index);
     })
     .style("stroke", function(d){
-      return d3.rgb(color(d.target.index)).darker();
+      return d3.rgb(utils.color(d.target.index)).darker();
     });
 
   function groupTicks(d, step){
@@ -152,19 +119,8 @@ function buildChord(csvData){
   */
 
   d3.selectAll(".ribbons").selectAll("path")
-    .on("mouseover",function(d){
-      var ribbon = d3.select(this);
-      var ribbons = d3.select(".ribbons").selectAll("path");
-      ribbons.style("opacity", 0.3);
-      ribbon.style("opacity", 1.0);
-      console.log(ribbon.datum());
-      tip.show(d);
-    })
-    .on("mouseout", function(d){
-      var ribbons = d3.select(".ribbons").selectAll("path");
-      ribbons.style("opacity", 1.0);
-      tip.hide(d);
-    });
+    .on("mouseover", selectRobbin)
+    .on("mouseout", clearRobbin);
   d3.selectAll(".ribbons").call(tip);
 
   var selectedSet = new Set();
@@ -174,10 +130,10 @@ function buildChord(csvData){
       var thisGroup = d3.select(this);
       if(thisGroup.attr("class") == "selected"){
         thisGroup.attr("class", "");
-        selectedSet.delete(leagues[thisGroup.datum().index]);
+        selectedSet.delete(thisGroup.datum().index);
       }else{
         thisGroup.attr("class", "selected");
-        selectedSet.add(leagues[thisGroup.datum().index]);
+        selectedSet.add(thisGroup.datum().index);
       }
       teams(selectedSet);
     });
@@ -187,4 +143,41 @@ function buildChord(csvData){
 
 function teams(selectedLeagues){
   console.log(selectedLeagues);
+  selectRobbin(undefined, undefined, undefined, selectedLeagues);
+}
+var cache;
+function selectRobbin(d, _, _, leagues) {
+    if (!leagues) {
+        var ribbon = d3.select(this);
+        var ribbons = d3.select(".ribbons").selectAll("path").filter(function (d) {
+            return true;
+        });
+        ribbons.transition().duration(600)
+            .style("opacity", 0.3);
+        ribbon.transition().duration(600)
+            .style("opacity", 1.0);
+        tip.show(d);
+        selectLeague(d.target.index);
+    } else {
+        cache = leagues;
+        var ribbons = d3.select(".ribbons").selectAll("path")
+        ribbons.transition().duration(600)
+            .style("opacity", function (d) {
+                return leagues.size == 0 || leagues.has(d.target.index) || leagues.has(d.source.index) ? 1.0 : 0.3;
+            });
+        selectLeague(undefined, leagues);
+    }
+}
+
+function clearRobbin(d) {
+
+    tip.hide(d);
+    if (cache && cache.size > 0) {
+        selectRobbin(undefined, undefined, undefined, cache);
+    } else {
+        var ribbons = d3.select(".ribbons").selectAll("path");
+        ribbons.transition().duration(600)
+            .style("opacity", 1.0);
+        selectLeague(null, cache);
+    }
 }
