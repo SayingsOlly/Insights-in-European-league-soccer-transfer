@@ -37,7 +37,7 @@ The form of data set is several tables in sqlite database, so we plan to join th
 6.  Animation of players transfer among leagues from year to year. (optional)
 
 ## Ideas of Design
-We plan to display the number of players transfered both between teams within a leagues and between leagues. In class we use vertices and edges to show relations and a node-link diagram has been introduced. We use this node-link diagram to express the transfer relationship of teams. We used to plan zoom in a team to show the name and the transfer numbers of that team. According to the seggestion of Tas we decide to use tooltip to show these informations. Besides node-link diagrams, we design a link-in-circle diagram to display the transfer between leagues. This diagram need less space, comparing to  our another design where we double the leagues to make it into two column and draw lines between columns to show the relationship. The scale is added outside the circle to avoid the quantitative shortage of the circle.  We plan to add a year bar and use brush to select data used in these two graph. The sketch of these two diagrams are shown in figure 1.
+We plan to display the number of players transfered both between teams within a leagues and between leagues. In class we use vertices and edges to show relations and a force direct diagram has been introduced. We use this node-link diagram to express the transfer relationship of teams. We used to plan zoom in a team to show the name and the transfer numbers of that team. According to the seggestion of Tas we decide to use tooltip to show these informations. Besides node-link diagrams, we design a chord diagram to display the transfer between leagues. This diagram need less space, comparing to  our another design where we double the leagues to make it into two column and draw lines between columns to show the relationship. The scale is added outside the circle to avoid the quantitative shortage of the circle.  We plan to add a year bar and use brush to select data used in these two graph. The sketch of these two diagrams are shown in figure 1.
 
 ![figure1](final1.png)
 
@@ -48,9 +48,9 @@ Moreover, we are going to use a line chart to show the trend of players transfer
 
 ## Design
 
-The link-in-circle diagram (diagram 1) are shown in figure 3, which is following our original idea. The number of transfered players can be read from the scale outside the circle as well as the tooltip. When mouseover, the link become highlight and other links become light grey.
+The chord diagram (diagram 1) are shown in figure 3, which is following our original idea. The number of transfered players can be read from the scale outside the circle as well as the tooltip. When mouseover, the link become highlight and other links become light grey.
 
-We can also see the node-link diagram (diagram 2) in figure 3 where we can get the transfer relation of teams not only within a league but also among different leagues.
+We can also see the force direct diagram (diagram 2) in figure 3 where we can get the transfer relation of teams not only within a league but also among different leagues.
 
 We can either moseover the edges or select the arc of multiple leagues from diagram 1  to filter out the teams in corresponding leagues for  diagram 2. We distinguishi selected teams by highlighting the vertices and edges of these these teams and making other teams become translucent, which can be seen in figure 4.
 
