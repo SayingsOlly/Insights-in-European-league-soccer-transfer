@@ -1,8 +1,9 @@
-
-
 var utils = {};
 
+
 window.onload = function () {
+  var years = ["2008-2009","2009-2010", '2010-2011', '2011-2012', '2012-2013', '2013-2014'];
+
     d3.csv("../../data/transfer2008-2009.csv", function(error, csvData){
         var leagues = [],
             transferMatrix = [];
@@ -19,7 +20,8 @@ window.onload = function () {
             i++;
             transferMatrix.push(item);
         });
-        setUp(leagues, transferMatrix);
+      setUp(leagues, transferMatrix);
+      yearChart(years, leagues);
         buildChord(leagues, transferMatrix);
         d3.csv("../../data/team_transfer2008-2009.csv", function(error, csvData){
             var teams = [],
