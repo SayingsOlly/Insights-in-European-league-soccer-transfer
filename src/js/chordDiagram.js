@@ -62,6 +62,7 @@ function yearChart(){
     }
 
     updateYears([circle.datum()]);
+    forceDirect.loadYear(circle.datum());
   });
 
 }
@@ -275,7 +276,7 @@ function selectRobbin(d, _, _, leagues) {
         ribbon.transition().duration(600)
             .style("opacity", 1.0);
         tip.show(d);
-        selectLeague(d.target.index);
+        forceDirect.selectLeague(d.target.index);
     } else {
         cache = leagues;
       var ribbons = d3.select(".ribbons").selectAll("path");
@@ -283,7 +284,7 @@ function selectRobbin(d, _, _, leagues) {
             .style("opacity", function (d) {
                 return leagues.size == 0 || leagues.has(d.target.index) || leagues.has(d.source.index) ? 1.0 : 0.1;
             });
-        selectLeague(undefined, leagues);
+        forceDirect.selectLeague(undefined);
     }
 }
 
@@ -296,12 +297,12 @@ function clearRobbin(d) {
         var ribbons = d3.select(".ribbons").selectAll("path");
         ribbons.transition().duration(600)
             .style("opacity", 1.0);
-        selectLeague(null, cache);
+        forceDirect.selectLeague(null, cache);
     }
 }
 
 function updateYears(yearList){
-
+  forceDirect.loadYears(yearList, leagues);
   var transferMatrix = [];
   leagues.forEach(function(d){
     transferMatrix.push([0,0,0,0,0,0,0,0,0,0,0]);
