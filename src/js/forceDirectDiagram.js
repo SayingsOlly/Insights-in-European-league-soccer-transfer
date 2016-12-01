@@ -13,10 +13,9 @@ function ForceDirect() {
         .force("link", d3.forceLink()
             .id(function(d) {
             return d.teamIndex;
-        })
-            //.strength(function(d){ return d.value/20; })
+        }).distance(190)//function(d){ return d.value/20; })
         )
-        .force("charge", d3.forceManyBody())
+        .force("charge", d3.forceManyBody().distanceMax(1000))
         .force("center", d3.forceCenter(width / 2, height / 2));
 }
 ForceDirect.prototype.loadYears = function (years) {
@@ -100,14 +99,9 @@ ForceDirect.prototype.loadYear = function (year, transferMatrix, fn) {
                     });
                 }
             });
-            //var deleted = {D:0};
-            //teams.forEach(function (d, index) {
-            //    if (d.leagueIndex!=null) {
-            //
-            //    } else {
-            //        deleted.D++;
-            //    }
-            //});
+            teams = teams.filter(function (d, index) {
+                return d.value != 0;
+            });
             if (fn) {
                 fn(teams, teamTransfers, teamNameToIndex);
             } else {
@@ -127,14 +121,6 @@ ForceDirect.prototype.updateYear = function(matrix, showName) {
         width = +svg.attr("width"),
         height = +svg.attr("height"),
         me = this;
-
-    this.simulation.nodes(me.teams);
-
-    this.simulation.force("link")
-        .links(me.teamTransfers);
-
-    this.simulation.alpha(1);
-    this.simulation.alphaTarget(0);
 
     var teamsMax = d3.max(me.teams, function (d) {return d.value});
     var teamsMin = d3.min(me.teams, function (d) {return d.value});
@@ -195,6 +181,14 @@ ForceDirect.prototype.updateYear = function(matrix, showName) {
     text = newText.merge(text);
     text.html(function(d) { return showName && d.name; });
 
+    this.simulation.nodes(me.teams);
+
+    this.simulation.force("link")
+        .links(me.teamTransfers);
+
+    this.simulation.alpha(1).restart();
+    this.simulation.alphaTarget(0).restart();
+
     this.simulation.on("tick", ticked);
 
     function ticked() {
@@ -228,6 +222,7 @@ ForceDirect.prototype.updateYear = function(matrix, showName) {
             });
         }
     }
+    this.selectLeague();
 }
 ForceDirect.prototype.dragstarted = function(d) {
     if (!d3.event.active) this.simulation.alphaTarget(0.35).restart();
@@ -312,6 +307,12 @@ ForceDirect.prototype.selectLeague = function (league, leagues) {
 }
 
 ForceDirect.prototype.selectNode = function (d) {
+    var nameSet = new Set();
+    nameSet.add(d.name);
+    this.selectNodes(nameSet);
+}
+
+ForceDirect.prototype.selectNodes = function (teamNames) {
     var me = this;
 
     if (!this.selectMode) {
@@ -320,24 +321,16 @@ ForceDirect.prototype.selectNode = function (d) {
     }
 
     me.teamTransfers = me.teamTransfersC.filter(function (teamTransfer) {
-        return  teamTransfer.sourceD.teamIndex == d.teamIndex|| teamTransfer.targetD.teamIndex == d.teamIndex;
+        return teamNames.has(teamTransfer.sourceD.name) || teamNames.has(teamTransfer.targetD.name);
     });
 
-    //me.teamTransfers = me.teamTransfers.filter(function (teamTransfer) {
-    //    return me.teamTransfers.find(function (teamTransfer2) {
-    //        return teamTransfer.sourceD.teamIndex == teamTransfer2.targetD.teamIndex || teamTransfer.targetD.teamIndex == teamTransfer2.sourceD.teamIndex ||
-    //        teamTransfer.sourceD.teamIndex == teamTransfer2.sourceD.teamIndex || teamTransfer.targetD.teamIndex == teamTransfer2.targetD.teamIndex;
-    //    });
-    //});
-
     me.teams = me.teamsC.filter(function (team) {
-        return team.teamIndex == d.teamIndex || me.teamTransfers.find(function (teamTransfer) {
+        return me.teamTransfers.find(function (teamTransfer) {
                 return teamTransfer.sourceD.teamIndex == team.teamIndex|| teamTransfer.targetD.teamIndex == team.teamIndex;
             });
     })
     this.selectMode = true;
-    //this.simulation.force("charge").distanceMax(1600);
-    this.simulation.force("charge").strength(-4000);
+    //this.simulation.force("charge").strength(-4000 / (teamNames.size * 2 - 1));
     this.updateYear(null, true);
 }
 
@@ -346,6 +339,6 @@ ForceDirect.prototype.deselectNode = function () {
         this.selectMode = false;
         this.teams = this.teamsC;
         this.teamTransfers = this.teamTransfersC;
-        this.simulation.force("charge").strength(-30);
+        //this.simulation.force("charge").strength(-30);
     }
 }

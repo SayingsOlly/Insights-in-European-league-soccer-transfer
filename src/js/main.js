@@ -6,17 +6,6 @@ var forceDirect, leagueSelectionBar, teamSelectionBar;
 window.onload = function () {
     forceDirect = new ForceDirect();
 
-    //d3.select('.collapsable').on('mouseover', function() {
-    //    var handle = d3.select('.hover-handle');
-    //    var content = d3.select('.collapsable').select('.content');
-    //    content.classed('show', true);
-    //    content.style('display', 'inherit');
-    //
-    //}).on('mouseout', function() {
-    //    var content = d3.select('.collapsable').select('.content');
-    //    content.classed('show', false);
-    //});
-
     d3.csv("../../data/transfer2008-2009.csv", function(error, csvData){
         var transferMatrix = [];
         var i = 0;
@@ -34,7 +23,7 @@ window.onload = function () {
         });
 
       setUp(leagues, transferMatrix);
-      teamSelectionBar = new TeamSelectionBar();
+      teamSelectionBar = new TeamSelectionBar(forceDirect);
       leagueSelectionBar = new LeagueSelectionBar(teamSelectionBar, forceDirect);
       yearChart();
       buildChord(transferMatrix);

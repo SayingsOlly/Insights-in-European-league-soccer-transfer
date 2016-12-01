@@ -1,5 +1,5 @@
 
-function LeagueSelectionBar(teamSelectionBar) {
+function LeagueSelectionBar(teamSelectionBar, forceDirect) {
     var me = this;
     this.selectedLeagues = new Set();
 
