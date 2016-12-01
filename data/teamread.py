@@ -7,12 +7,13 @@ for line in f:
 
 league.remove("league")
 league = list(league)
-
+# print league
 # for item in league:
 # 	print item
 
 ########################################
-item  = league[0]
+item  = league[4]
+
 
 team = set()
 f = open("season2008.csv")
