@@ -11,6 +11,11 @@ body {
     width: 100%;
 }
 
+.half-width {
+    width: 50%;
+    height: calc(100% - 100px);
+}
+
 .group-tick line {
   stroke: #000;
 }
@@ -67,4 +72,9 @@ body {
     /*stroke: lightgrey;*/
     stroke-opacity: 0.3;
     opacity: 0.3;
+}
+
+.nodes text.valueTag, .nodes text.nameTag {
+    text-anchor: middle;
+    cursor: default;
 }
