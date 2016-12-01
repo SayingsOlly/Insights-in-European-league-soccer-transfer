@@ -5,7 +5,7 @@ function yearChart(){
   var yearChart = d3.select("#year-chart");
 
   svgWidth = yearChart.node().getBoundingClientRect().width;
-  svgHeight = 100;
+  svgHeight = 60;
 
 
   console.log(svgWidth);
@@ -19,6 +19,13 @@ function yearChart(){
   //scale
   yearScale = d3.scaleLinear()
       .range([0,svgWidth]).domain([0,years.length]);
+
+  svg.append("path")
+    .attr("class", "lineCharts")
+    .attr("stroke","grey")
+    .style("stroke-dasharray", ("3,3"))
+    .style("z-index", "0")
+    .attr("d", "M 0 20 L " + self.svgWidth + " 20");
 
   var yearCircle = svg.selectAll("circle")
       .data(years);
@@ -45,24 +52,14 @@ function yearChart(){
     .attr("dy", ".25em")
     .attr("dx","-2.0em");
 
-  svg.append("path")
-    .attr("class", "lineCharts")
-    .attr("stroke","grey")
-    .style("stroke-dasharray", ("3,3"))
-    .style("z-index", "0")
-    .attr("d", "M 0 20 L " + self.svgWidth + " 20");
-
-
   yearCircle.on("click", function(d,i){
     var circle = d3.select(this);
-    console.log("aaaa");
-    if(circle.attr("class") != "highlighted"){
-      yearCircle.attr("class", "year-circle");
-      circle.attr("class","highlighted");
-    }
+    yearCircle.classed('selected', false);
+    circle.classed('selected', true);
 
     updateYears([circle.datum()]);
     forceDirect.loadYear(circle.datum());
+    clearBrush(svg);
   });
 
 }
@@ -284,7 +281,7 @@ function selectRobbin(d, _, _, leagues) {
             .style("opacity", function (d) {
                 return leagues.size == 0 || leagues.has(d.target.index) || leagues.has(d.source.index) ? 1.0 : 0.1;
             });
-        forceDirect.selectLeague(undefined);
+        forceDirect.selectLeague(undefined, leagues);
     }
 }
 
@@ -330,12 +327,11 @@ function updateYears(yearList){
 function setUpBrush(years, svg, svgWidth, svgHeight){
 
   var brush = d3.brushX()
-      .extent([[-1,0],[svgWidth+1,svgHeight/2]]).on("end", brushed);
+      .extent([[-1,0],[svgWidth+1,40]]).on("end", brushed);
 
   svg.append("g").attr("class","brushYear").call(brush);
 
   function brushed(){
-    console.log("lalala");
     var selection = d3.event.selection;
     // var sb = self.svg.selectAll("rect");
     var list = [];
@@ -347,8 +343,18 @@ function setUpBrush(years, svg, svgWidth, svgHeight){
 
     if(list.length!=0){
       updateYears(list);
+      svg.selectAll("circle").classed('selected', function (d) {
+        return list.find(function (year) {
+          return d == year;
+        })
+      });
     }
   }
+}
+
+function clearBrush(svg){
+    svg.select("g.brushYear rect.selection")
+        .attr('width', 0);
 }
 
 

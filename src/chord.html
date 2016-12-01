@@ -1,28 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset = "UTF-8">
+<head>
+    <meta charset="UTF-8">
     <title>index</title>
     <script type="text/javascript" src="bower_components/d3/d3.js"></script>
     <script type="text/javascript" src="bower_components/d3-tip/index.js"></script>
     <link rel="stylesheet" href="css/styles.css"/>
-  </head>
-  <body>
-    <div id="chord" class="view half-width">
-      <h1> chorddiagram </h1>
-      <svg id="chordSVG" width="750" height="750"></svg>
+</head>
+<body>
+<div class="collapsable">
+    <div class="content">
+<div id="leagues-selections" class="view">
+    <div name="England Premier League"><img src="../data/leagues/England Premier League.jpg"></div>
+    <div name="Germany 1. Bundesliga"><img src="../data/leagues/Germany 1. Bundesliga.png"></div>
+    <div name="Switzerland Super League"><img src="../data/leagues/Switzerland Super League.png"></div>
+    <div name="Netherlands Eredivisie"><img src="../data/leagues/Netherlands Eredivisie.jpg"></div>
+    <div name="France Ligue 1"><img src="../data/leagues/France Ligue 1.png"></div>
+    <div name="Scotland Premier League"><img src="../data/leagues/Scotland Premier League.jpg"></div>
+    <div name="Portugal Liga ZON Sagres"><img src="../data/leagues/Portugal Liga ZON Sagres.png"></div>
+    <div name="Poland Ekstraklasa"><img src="../data/leagues/Poland Ekstraklasa.png"></div>
+    <div name="Italy Serie A"><img src="../data/leagues/Italy Serie A.png"></div>
+    <div name="Spain LIGA BBVA"><img src="../data/leagues/Spain LIGA BBVA.jpg"></div>
+    <div name="Belgium Jupiler League"><img src="../data/leagues/Belgium Jupiler League.png"></div>
+</div>
+<div id="teams-selections" class="view">
+    <div class="view" id="team-England-Premier-League">
+        <img name="Manchester United" src="../data/teams/England Premier League/Manchester United.jpg">
+        <img name="Newcastle United" src="../data/teams/England Premier League/Newcastle United.png">
+        <img name="Arsenal" src="../data/teams/England Premier League/Arsenal.jpg">
+        <img name="West Bromwich Albion" src="../data/teams/England Premier League/West Bromwich Albion.png">
+        <img name="Sunderland" src="../data/teams/England Premier League/Sunderland.png">
+        <img name="Liverpool" src="../data/teams/England Premier League/Liverpool.jpg">
+        <img name="West Ham United" src="../data/teams/England Premier League/West Ham United.png">
+        <img name="Wigan Athletic" src="../data/teams/England Premier League/Wigan Athletic.png">
+        <img name="Aston Villa" src="../data/teams/England Premier League/Aston Villa.png">
+        <img name="Manchester City" src="../data/teams/England Premier League/Manchester City.png">
+        <img name="Everton" src="../data/teams/England Premier League/Everton.png">
+        <img name="Blackburn Rovers" src="../data/teams/England Premier League/Blackburn Rovers.png">
+        <img name="Middlesbrough" src="../data/teams/England Premier League/Middlesbrough.png">
+        <img name="Tottenham Hotspur" src="../data/teams/England Premier League/Tottenham Hotspur.png">
+        <img name="Bolton Wanderers" src="../data/teams/England Premier League/Bolton Wanderers.png">
+        <img name="Stoke City" src="../data/teams/England Premier League/Stoke City.png">
+        <img name="Hull City" src="../data/teams/England Premier League/Hull City.png">
+        <img name="Fulham" src="../data/teams/England Premier League/Fulham.png">
+        <img name="Chelsea" src="../data/teams/England Premier League/Chelsea.png">
+        <img name="Portsmouth" src="../data/teams/England Premier League/Portsmouth.png">
     </div>
-    <div id="force-direct" class="view half-width">
-      <h1> force direct diagram </h1>
-      <svg id="force-direct-svg" width="750" height="750"></svg>
+    <div class="view" id="team-Germany-1.-Bundesliga"><img name="FC Bayern Munich" src="../data/teams/Germany 1. Bundesliga/FC Bayern Munich.png"><img name="Bayer 04 Leverkusen" src="../data/teams/Germany 1. Bundesliga/Bayer 04 Leverkusen.jpg"><img name="Borussia Dortmund" src="../data/teams/Germany 1. Bundesliga/Borussia Dortmund.png"><img name="FC Schalke 04" src="../data/teams/Germany 1. Bundesliga/FC Schalke 04.png"><img name="Hannover 96" src="../data/teams/Germany 1. Bundesliga/Hannover 96.png"><img
+            name="VfL Wolfsburg" src="../data/teams/Germany 1. Bundesliga/VfL Wolfsburg.png"><img name="1. FC Köln" src="../data/teams/Germany 1. Bundesliga/1. FC Köln.png"><img name="Eintracht Frankfurt" src="../data/teams/Germany 1. Bundesliga/Eintracht Frankfurt.png"><img name="Hertha BSC Berlin" src="../data/teams/Germany 1. Bundesliga/Hertha BSC Berlin.jpg"><img name="DSC Arminia Bielefeld" src="../data/teams/Germany 1. Bundesliga/DSC Arminia Bielefeld.png"><img name="SV Werder Bremen"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        src="../data/teams/Germany 1. Bundesliga/SV Werder Bremen.png"><img
+            name="FC Energie Cottbus" src="../data/teams/Germany 1. Bundesliga/FC Energie Cottbus.png"><img name="TSG 1899 Hoffenheim" src="../data/teams/Germany 1. Bundesliga/TSG 1899 Hoffenheim.png"><img name="Borussia Mönchengladbach" src="../data/teams/Germany 1. Bundesliga/Borussia Mönchengladbach.png"><img name="VfB Stuttgart" src="../data/teams/Germany 1. Bundesliga/VfB Stuttgart.png"><img name="Karlsruher SC" src="../data/teams/Germany 1. Bundesliga/Karlsruher SC.png"><img
+            name="VfL Bochum" src="../data/teams/Germany 1. Bundesliga/VfL Bochum.jpg"></div>
+    <div class="view" id="team-Switzerland-Super-League"><img name="Grasshopper Club Zürich" src="../data/teams/Switzerland Super League/Grasshopper Club Zürich.png"><img name="AC Bellinzona" src="../data/teams/Switzerland Super League/AC Bellinzona.png"><img name="BSC Young Boys" src="../data/teams/Switzerland Super League/BSC Young Boys.png"><img name="FC Basel" src="../data/teams/Switzerland Super League/FC Basel.png"><img name="FC Aarau" src="../data/teams/Switzerland Super League/FC Aarau.png"><img
+            name="FC Sion" src="../data/teams/Switzerland Super League/FC Sion.png"><img name="FC Luzern" src="../data/teams/Switzerland Super League/FC Luzern.png"><img name="FC Vaduz" src="../data/teams/Switzerland Super League/FC Vaduz.png"><img name="Neuchâtel Xamax" src="../data/teams/Switzerland Super League/Neuchâtel Xamax.png"><img name="FC Zürich" src="../data/teams/Switzerland Super League/FC Zürich.png"></div>
+    <div class="view" id="team-Netherlands-Eredivisie"><img name="Vitesse" src="../data/teams/Netherlands Eredivisie/Vitesse.png"><img name="FC Groningen" src="../data/teams/Netherlands Eredivisie/FC Groningen.jpg"><img name="Roda JC Kerkrade" src="../data/teams/Netherlands Eredivisie/Roda JC Kerkrade.png"><img name="FC Twente" src="../data/teams/Netherlands Eredivisie/FC Twente.jpg"><img name="Willem II" src="../data/teams/Netherlands Eredivisie/Willem II.png"><img name="Ajax"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          src="../data/teams/Netherlands Eredivisie/Ajax.png"><img
+            name="N.E.C." src="../data/teams/Netherlands Eredivisie/N.E.C..png"><img name="De Graafschap" src="../data/teams/Netherlands Eredivisie/De Graafschap.png"><img name="FC Utrecht" src="../data/teams/Netherlands Eredivisie/FC Utrecht.png"><img name="PSV" src="../data/teams/Netherlands Eredivisie/PSV.jpg"><img name="Heracles Almelo" src="../data/teams/Netherlands Eredivisie/Heracles Almelo.jpg"><img name="Feyenoord" src="../data/teams/Netherlands Eredivisie/Feyenoord.png"><img
+            name="Sparta Rotterdam" src="../data/teams/Netherlands Eredivisie/Sparta Rotterdam.png"><img name="ADO Den Haag" src="../data/teams/Netherlands Eredivisie/ADO Den Haag.png"><img name="FC Volendam" src="../data/teams/Netherlands Eredivisie/FC Volendam.png"><img name="SC Heerenveen" src="../data/teams/Netherlands Eredivisie/SC Heerenveen.png"><img name="AZ" src="../data/teams/Netherlands Eredivisie/AZ.png"><img name="NAC Breda"
+                                                                                                                                                                                                                                                                                                                                                                                                                                         src="../data/teams/Netherlands Eredivisie/NAC Breda.png"></div>
+    <div class="view" id="team-France-Ligue-1"><img name="AJ Auxerre" src="../data/teams/France Ligue 1/AJ Auxerre.svg"><img name="FC Nantes" src="../data/teams/France Ligue 1/FC Nantes.png"><img name="Girondins de Bordeaux" src="../data/teams/France Ligue 1/Girondins de Bordeaux.jpg"><img name="SM Caen" src="../data/teams/France Ligue 1/SM Caen.png"><img name="Le Havre AC" src="../data/teams/France Ligue 1/Le Havre AC.png"><img name="OGC Nice" src="../data/teams/France Ligue 1/OGC Nice.png"><img
+            name="Le Mans FC" src="../data/teams/France Ligue 1/Le Mans FC.png"><img name="FC Lorient" src="../data/teams/France Ligue 1/FC Lorient.png"><img name="Olympique Lyonnais" src="../data/teams/France Ligue 1/Olympique Lyonnais.jpg"><img name="Toulouse FC" src="../data/teams/France Ligue 1/Toulouse FC.jpg"><img name="AS Monaco" src="../data/teams/France Ligue 1/AS Monaco.jpg"><img name="Paris Saint-Germain" src="../data/teams/France Ligue 1/Paris Saint-Germain.jpg"><img
+            name="AS Nancy-Lorraine" src="../data/teams/France Ligue 1/AS Nancy-Lorraine.png"><img name="LOSC Lille" src="../data/teams/France Ligue 1/LOSC Lille.png"><img name="Stade Rennais FC" src="../data/teams/France Ligue 1/Stade Rennais FC.png"><img name="Olympique de Marseille" src="../data/teams/France Ligue 1/Olympique de Marseille.jpg"><img name="FC Sochaux-Montbéliard" src="../data/teams/France Ligue 1/FC Sochaux-Montbéliard.jpg"><img name="Grenoble Foot 38"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                   src="../data/teams/France Ligue 1/Grenoble Foot 38.png"><img
+            name="Valenciennes FC" src="../data/teams/France Ligue 1/Valenciennes FC.png"><img name="AS Saint-Étienne" src="../data/teams/France Ligue 1/AS Saint-Étienne.png"></div>
+    <div class="view" id="team-Scotland-Premier-League"><img name="Falkirk" src="../data/teams/Scotland Premier League/Falkirk.jpg">
+        <img name="Rangers" src="../data/teams/Scotland Premier League/Rangers.png"><img name="Heart of Midlothian" src="../data/teams/Scotland Premier League/Heart of Midlothian.png"><img name="Motherwell" src="../data/teams/Scotland Premier League/Motherwell.png"><img name="Kilmarnock" src="../data/teams/Scotland Premier League/Kilmarnock.png"><img name="Hibernian"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                src="../data/teams/Scotland Premier League/Hibernian.png"><img
+            name="Aberdeen" src="../data/teams/Scotland Premier League/Aberdeen.svg">
+        <img name="Inverness Caledonian Thistle" src="../data/teams/Scotland Premier League/Inverness Caledonian Thistle.png">
+        <img name="Celtic" src="../data/teams/Scotland Premier League/Celtic.jpg"><img name="St. Mirren" src="../data/teams/Scotland Premier League/St. Mirren.png"><img name="Hamilton Academical FC" src="../data/teams/Scotland Premier League/Hamilton Academical FC.png"><img name="Dundee United"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      src="../data/teams/Scotland Premier League/Dundee United.png">
     </div>
-    <div id="year-chart" class="view">
+    <div class="view" id="team-Portugal-Liga-ZON-Sagres"><img name="FC Porto" src="../data/teams/Portugal Liga ZON Sagres/FC Porto.png">
+        <img name="CF Os Belenenses" src="../data/teams/Portugal Liga ZON Sagres/CF Os Belenenses.png"><img name="Sporting CP" src="../data/teams/Portugal Liga ZON Sagres/Sporting CP.jpg"><img name="Trofense" src="../data/teams/Portugal Liga ZON Sagres/Trofense.png"><img name="Vitória Guimarães" src="../data/teams/Portugal Liga ZON Sagres/Vitória Guimarães.png"><img
+            name="Vitória Setúbal" src="../data/teams/Portugal Liga ZON Sagres/Vitória Setúbal.png">
+        <img name="FC Paços de Ferreira" src="../data/teams/Portugal Liga ZON Sagres/FC%20Paços%20de%20Ferreira.jpeg"><img name="SC Braga" src="../data/teams/Portugal Liga ZON Sagres/SC Braga.png"><img name="Amadora" src="../data/teams/Portugal Liga ZON Sagres/Amadora.svg"><img name="Académica de Coimbra" src="../data/teams/Portugal Liga ZON Sagres/Académica de Coimbra.png"><img name="Rio Ave FC"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   src="../data/teams/Portugal Liga ZON Sagres/Rio Ave FC.png"><img
+            name="SL Benfica" src="../data/teams/Portugal Liga ZON Sagres/SL Benfica.png">
+        <img name="Leixões SC" src="../data/teams/Portugal Liga ZON Sagres/Leixões SC.png"><img name="Atlético Nacional" src="../data/teams/Portugal Liga ZON Sagres/Atlético Nacional.png"><img name="Naval 1° de Maio" src="../data/teams/Portugal Liga ZON Sagres/Naval 1° de Maio.png"><img name="CS Marítimo" src="../data/teams/Portugal Liga ZON Sagres/CS Marítimo.png"></div>
+    <div class="view" id="team-Poland-Ekstraklasa"><img name="Wisła Kraków" src="../data/teams/Poland Ekstraklasa/Wisła Kraków.png">
+        <img name="Polonia Bytom" src="../data/teams/Poland Ekstraklasa/Polonia Bytom.png">
+        <img name="Górnik Zabrze" src="../data/teams/Poland Ekstraklasa/Górnik Zabrze.png"><img name="Ruch Chorzów" src="../data/teams/Poland Ekstraklasa/Ruch Chorzów.png"><img name="Legia Warszawa" src="../data/teams/Poland Ekstraklasa/Legia Warszawa.png"><img name="P. Warszawa"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        src="../data/teams/Poland Ekstraklasa/P. Warszawa.png"><img
+            name="Śląsk Wrocław" src="../data/teams/Poland Ekstraklasa/Śląsk Wrocław.png">
+        <img name="Lechia Gdańsk" src="../data/teams/Poland Ekstraklasa/Lechia Gdańsk.png"><img name="Lodzki KS" src="../data/teams/Poland Ekstraklasa/Lodzki KS.jpg"><img name="Odra Wodzisław" src="../data/teams/Poland Ekstraklasa/Odra Wodzisław.png">
+        <img name="Lech Poznań" src="../data/teams/Poland Ekstraklasa/Lech Poznań.png">
+        <img name="GKS Bełchatów"
+                                                                                                                                                                                                                                                                                                                                                                                                                                 src="../data/teams/Poland Ekstraklasa/GKS Bełchatów.png"><img name="Arka Gdynia"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               src="../data/teams/Poland Ekstraklasa/Arka Gdynia.png"><img
+            name="Jagiellonia Białystok" src="../data/teams/Poland Ekstraklasa/Jagiellonia Białystok.png">
+        <img name="Piast Gliwice" src="../data/teams/Poland Ekstraklasa/Piast Gliwice.png"><img name="Cracovia" src="../data/teams/Poland Ekstraklasa/Cracovia.png"></div>
+    <div class="view" id="team-Italy-Serie-A"><img name="Atalanta" src="../data/teams/Italy Serie A/Atalanta.png">
+        <img name="Siena" src="../data/teams/Italy Serie A/Siena.png"><img name="Cagliari" src="../data/teams/Italy Serie A/Cagliari.png"><img name="Lazio" src="../data/teams/Italy Serie A/Lazio.png"><img name="Catania" src="../data/teams/Italy Serie A/Catania.png"><img name="Genoa" src="../data/teams/Italy Serie A/Genoa.png"><img name="Chievo Verona"
+                                                                                                                                                                                                                                                                                                                                                                                                                                          src="../data/teams/Italy Serie A/Chievo Verona.png"><img
+            name="Reggio Calabria" src="../data/teams/Italy Serie A/Reggio Calabria.jpg">
+        <img name="Fiorentina" src="../data/teams/Italy Serie A/Fiorentina.png"><img name="Juventus" src="../data/teams/Italy Serie A/Juventus.png"><img name="Milan" src="../data/teams/Italy Serie A/Milan.png"><img name="Bologna" src="../data/teams/Italy Serie A/Bologna.png"><img name="Roma" src="../data/teams/Italy Serie A/Roma.png"><img name="Napoli" src="../data/teams/Italy Serie A/Napoli.png"><img
+            name="Sampdoria" src="../data/teams/Italy Serie A/Sampdoria.png"><img name="Inter" src="../data/teams/Italy Serie A/Inter.jpg"><img name="Torino" src="../data/teams/Italy Serie A/Torino.png"><img name="Lecce" src="../data/teams/Italy Serie A/Lecce.png"><img name="Udinese" src="../data/teams/Italy Serie A/Udinese.png"><img name="Palermo" src="../data/teams/Italy Serie A/Palermo.png"></div>
+    <div class="view" id="team-Spain-LIGA-BBVA"><img name="Valencia CF" src="../data/teams/Spain LIGA BBVA/Valencia CF.png"><img name="RCD Mallorca" src="../data/teams/Spain LIGA BBVA/RCD Mallorca.png"><img name="CA Osasuna" src="../data/teams/Spain LIGA BBVA/CA Osasuna.png"><img name="Villarreal CF" src="../data/teams/Spain LIGA BBVA/Villarreal CF.png"><img name="RC Deportivo de La Coruña" src="../data/teams/Spain LIGA BBVA/RC Deportivo de La Coruña.png"><img name="Real Madrid CF"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    src="../data/teams/Spain LIGA BBVA/Real Madrid CF.jpg"><img
+            name="CD Numancia" src="../data/teams/Spain LIGA BBVA/CD Numancia.png"><img name="FC Barcelona" src="../data/teams/Spain LIGA BBVA/FC Barcelona.png"><img name="Racing Santander" src="../data/teams/Spain LIGA BBVA/Racing Santander.png"><img name="Sevilla FC" src="../data/teams/Spain LIGA BBVA/Sevilla FC.jpg"><img name="Real Sporting de Gijón" src="../data/teams/Spain LIGA BBVA/Real Sporting de Gijón.png"><img name="Getafe CF" src="../data/teams/Spain LIGA BBVA/Getafe CF.png"><img
+            name="Real Betis Balompié" src="../data/teams/Spain LIGA BBVA/Real Betis Balompié.jpg"><img name="RC Recreativo" src="../data/teams/Spain LIGA BBVA/RC Recreativo.png"><img name="RCD Espanyol" src="../data/teams/Spain LIGA BBVA/RCD Espanyol.png"><img name="Real Valladolid" src="../data/teams/Spain LIGA BBVA/Real Valladolid.png"><img name="Athletic Club de Bilbao" src="../data/teams/Spain LIGA BBVA/Athletic Club de Bilbao.png"><img name="UD Almería"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                              src="../data/teams/Spain LIGA BBVA/UD Almería.png"><img
+            name="Atlético Madrid" src="../data/teams/Spain LIGA BBVA/Atlético Madrid.jpg"><img name="Málaga CF" src="../data/teams/Spain LIGA BBVA/Málaga CF.png"></div>
+    <div class="view" id="team-Belgium-Jupiler-League"><img name="Beerschot AC" src="../data/teams/Belgium Jupiler League/Beerschot AC.png"><img name="SV Zulte-Waregem" src="../data/teams/Belgium Jupiler League/SV Zulte-Waregem.png"><img name="Sporting Lokeren" src="../data/teams/Belgium Jupiler League/Sporting Lokeren.jpg"><img name="KSV Cercle Brugge" src="../data/teams/Belgium Jupiler League/KSV Cercle Brugge.png"><img name="RSC Anderlecht"
+                                                                                                                                                                                                                                                                                                                                                                                                                             src="../data/teams/Belgium Jupiler League/RSC Anderlecht.png"><img name="KAA Gent"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                src="../data/teams/Belgium Jupiler League/KAA Gent.png"><img
+            name="RAEC Mons" src="../data/teams/Belgium Jupiler League/RAEC Mons.png"><img name="FCV Dender EH" src="../data/teams/Belgium Jupiler League/FCV Dender EH.gif"><img name="Standard de Liège" src="../data/teams/Belgium Jupiler League/Standard de Liège.png"><img name="KV Mechelen" src="../data/teams/Belgium Jupiler League/KV Mechelen.png"><img name="Club Brugge KV" src="../data/teams/Belgium Jupiler League/Club Brugge KV.png"><img name="KSV Roeselare"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                             src="../data/teams/Belgium Jupiler League/KSV Roeselare.png"><img
+            name="KV Kortrijk" src="../data/teams/Belgium Jupiler League/KV Kortrijk.png"><img name="Tubize" src="../data/teams/Belgium Jupiler League/Tubize.jpg"><img name="Mouscron" src="../data/teams/Belgium Jupiler League/Mouscron.jpg"><img name="KVC Westerlo" src="../data/teams/Belgium Jupiler League/KVC Westerlo.png"><img name="Sporting Charleroi" src="../data/teams/Belgium Jupiler League/Sporting Charleroi.gif"></div>
+</div>
     </div>
-    <script type="application/javascript" src="js/chordDiagram.js"></script>
-    <script type="application/javascript" src="js/forceDirectDiagram.js"></script>
-    <script type="application/javascript" src="js/main.js"></script>
-
-  </body>
-
-
+    <div class="hover-handle">
+        Leagues & Team Filters
+        <img src="css/downArrow.png">
+    </div>
+</div>
+<div id="year-chart" class="view">
+</div>
+<div id="chord" class="view half-width">
+    <h1> Player Transition </h1>
+    <svg id="chordSVG" width="750" height="750"></svg>
+</div>
+<div id="force-direct" class="view half-width">
+    <h1> Team Relationship </h1>
+    <svg id="force-direct-svg" width="750" height="750"></svg>
+</div>
+<script type="application/javascript" src="js/TeamSelectionBar.js"></script>
+<script type="application/javascript" src="js/LeagueSelectionBar.js"></script>
+<script type="application/javascript" src="js/chordDiagram.js"></script>
+<script type="application/javascript" src="js/forceDirectDiagram.js"></script>
+<script type="application/javascript" src="js/main.js"></script>
+</body>
 </html>

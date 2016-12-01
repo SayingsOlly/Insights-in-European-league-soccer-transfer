@@ -140,11 +140,11 @@ ForceDirect.prototype.updateYear = function(matrix, showName) {
     var teamsMin = d3.min(me.teams, function (d) {return d.value});
     var teamTransfersMax = d3.max(me.teamTransfers, function (d) {return d.value});
     var teamTransfersMin = d3.min(me.teamTransfers, function (d) {return d.value});
-    var teamScala = d3.scaleLinear()
+    me.teamScala = d3.scaleLinear()
         .domain([teamsMin, teamsMax])
         .range([10, 25]);
 
-    var teamTransferScala = d3.scaleLinear()
+    me.teamTransferScala = d3.scaleLinear()
         .domain([teamTransfersMin, teamTransfersMax])
         .range([3, 17]);
 
@@ -153,7 +153,7 @@ ForceDirect.prototype.updateYear = function(matrix, showName) {
     link.exit().remove();
     link = newLink.merge(link);
 
-    link.attr("stroke-width", function(d) { return teamTransferScala(d.value); })
+    link.attr("stroke-width", function(d) { return me.teamTransferScala(d.value); })
         .style("stroke", function(d) { return utils.color(d.sourceD.leagueIndex); });
 
     var node = svg.select(".nodes").selectAll("circle").data(me.teams);
@@ -169,7 +169,7 @@ ForceDirect.prototype.updateYear = function(matrix, showName) {
     node = newNode.merge(node);
 
     node.attr("r", function (d) {
-        return teamScala(d.value);
+        return me.teamScala(d.value);
     }).attr("fill", function(d) { return utils.color(d.leagueIndex); });
 
     node.select("title")
@@ -224,7 +224,7 @@ ForceDirect.prototype.updateYear = function(matrix, showName) {
             svg.select(".nodes").selectAll("text.nameTag").attr("x", function(d) {
                 return d.x;
             }).attr('y', function (d) {
-                return d.y - teamScala(d.value) - 4;
+                return d.y - me.teamScala(d.value) - 4;
             });
         }
     }
@@ -248,7 +248,8 @@ ForceDirect.prototype.dragended = function(d) {
 
 var cacheleagues;
 ForceDirect.prototype.selectLeague = function (league, leagues) {
-    var svg = d3.select("#force-direct-svg");
+    var svg = d3.select("#force-direct-svg"),
+        me = this;
 
     if (!leagues) {
         svg.select(".nodes")
@@ -261,7 +262,7 @@ ForceDirect.prototype.selectLeague = function (league, leagues) {
             })
             .transition().duration(800)
             .attr("r", function (d) {
-                return d.value + (league && d.leagueIndex == league ? 8 : 4);
+                return me.teamScala(d.value) + (league && d.leagueIndex == league ? 5 : 0);
             });
 
         svg.select(".links")
@@ -274,7 +275,7 @@ ForceDirect.prototype.selectLeague = function (league, leagues) {
             })
             .transition().duration(600)
             .attr("stroke-width", function (d) {
-                return d.value * (league && d.sourceD.leagueIndex == league ? 8 : 5);
+                return me.teamTransferScala(d.value) + (league && d.sourceD.leagueIndex == league ? 5 : 0);
             });
     } else if (leagues) {
         if (leagues.size == 0) {
@@ -292,7 +293,7 @@ ForceDirect.prototype.selectLeague = function (league, leagues) {
             })
             .transition().duration(800)
             .attr("r", function (d) {
-                return d.value + (cacheleagues && cacheleagues.has(d.leagueIndex) ? 8 : 4);
+                return me.teamScala(d.value) + (cacheleagues && cacheleagues.has(d.leagueIndex) ? 5 : 0);
             });
 
         svg.select(".links")
@@ -305,7 +306,7 @@ ForceDirect.prototype.selectLeague = function (league, leagues) {
             })
             .transition().duration(600)
             .attr("stroke-width", function (d) {
-                return d.value * (cacheleagues && cacheleagues.has(d.sourceD.leagueIndex) ? 8 : 5);
+                return me.teamTransferScala(d.value) + (cacheleagues && cacheleagues.has(d.sourceD.leagueIndex) ? 5 : 0);
             });
     }
 }
@@ -322,12 +323,12 @@ ForceDirect.prototype.selectNode = function (d) {
         return  teamTransfer.sourceD.teamIndex == d.teamIndex|| teamTransfer.targetD.teamIndex == d.teamIndex;
     });
 
-    me.teamTransfers = me.teamTransfers.filter(function (teamTransfer) {
-        return me.teamTransfers.find(function (teamTransfer2) {
-            return teamTransfer.sourceD.teamIndex == teamTransfer2.targetD.teamIndex || teamTransfer.targetD.teamIndex == teamTransfer2.sourceD.teamIndex ||
-            teamTransfer.sourceD.teamIndex == teamTransfer2.sourceD.teamIndex || teamTransfer.targetD.teamIndex == teamTransfer2.targetD.teamIndex;
-        });
-    });
+    //me.teamTransfers = me.teamTransfers.filter(function (teamTransfer) {
+    //    return me.teamTransfers.find(function (teamTransfer2) {
+    //        return teamTransfer.sourceD.teamIndex == teamTransfer2.targetD.teamIndex || teamTransfer.targetD.teamIndex == teamTransfer2.sourceD.teamIndex ||
+    //        teamTransfer.sourceD.teamIndex == teamTransfer2.sourceD.teamIndex || teamTransfer.targetD.teamIndex == teamTransfer2.targetD.teamIndex;
+    //    });
+    //});
 
     me.teams = me.teamsC.filter(function (team) {
         return team.teamIndex == d.teamIndex || me.teamTransfers.find(function (teamTransfer) {

@@ -1,6 +1,8 @@
 body {
-    font: 15px sans-serif;
-  font-family: 'Waiting for the Sunrise', cursive;
+  margin: 0;
+  padding: 60px 10px 10px;
+  position: relative;
+  font: 15px "Courier New", Courier, monospace;
   display: flex;
   font-weight: bold;
   flex-wrap: wrap;
@@ -42,10 +44,6 @@ body {
     stroke: black;
 }
 
-.highlighted{
-    stroke: #404040;
-    stroke-width:4;
-}
 
 .links line {
     stroke: #999;
@@ -77,4 +75,99 @@ body {
 .nodes text.valueTag, .nodes text.nameTag {
     text-anchor: middle;
     cursor: default;
+}
+
+.year-circle {
+    fill: #e3f4ff;
+    cursor: pointer;
+}
+
+.year-circle.selected {
+    fill: lightskyblue;
+    stroke: cornflowerblue;
+    stroke-width:4;
+}
+
+#leagues-selections {
+    margin: 10px 0 20px;
+}
+
+#leagues-selections img {
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+#leagues-selections div {
+    width: 130px;
+    height: 130px;
+    margin: 0 10px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+
+#leagues-selections div.not-selected,
+#teams-selections img.not-selected {
+    opacity: 0.3;
+}
+
+#teams-selections {
+}
+
+#teams-selections div.view {
+    display: none;
+    margin-bottom: 16px;
+}
+
+#teams-selections div.view.selected {
+    display: inline-block;
+    width: auto;
+}
+
+#teams-selections img {
+    max-width: 65px;
+    max-height: 65px;
+    vertical-align: middle;
+    margin: 0 10px 4px;
+    cursor: pointer;
+}
+
+.collapsable {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+.collapsable .content {
+    display: none;
+    background: lightyellow;
+}
+
+.collapsable:hover .content {
+    display: inherit;
+}
+
+.collapsable .hover-handle {
+    background: lightgrey;
+    height: 30px;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    line-height: 30px;
+}
+
+.collapsable .hover-handle img {
+    height: 19px;
+    position: absolute;
+    top: -4px;
+    bottom: 0;
+    margin: auto;
+    margin-left: 10px;
 }

@@ -1,10 +1,21 @@
 var utils = {};
 var leagues = [];
 var years = ["2008-2009","2009-2010", '2010-2011', '2011-2012', '2012-2013', '2013-2014'];
-var forceDirect;
+var forceDirect, leagueSelectionBar, teamSelectionBar;
 
 window.onload = function () {
     forceDirect = new ForceDirect();
+
+    //d3.select('.collapsable').on('mouseover', function() {
+    //    var handle = d3.select('.hover-handle');
+    //    var content = d3.select('.collapsable').select('.content');
+    //    content.classed('show', true);
+    //    content.style('display', 'inherit');
+    //
+    //}).on('mouseout', function() {
+    //    var content = d3.select('.collapsable').select('.content');
+    //    content.classed('show', false);
+    //});
 
     d3.csv("../../data/transfer2008-2009.csv", function(error, csvData){
         var transferMatrix = [];
@@ -21,7 +32,10 @@ window.onload = function () {
             i++;
             transferMatrix.push(item);
         });
+
       setUp(leagues, transferMatrix);
+      teamSelectionBar = new TeamSelectionBar();
+      leagueSelectionBar = new LeagueSelectionBar(teamSelectionBar, forceDirect);
       yearChart();
       buildChord(transferMatrix);
       forceDirect.loadYear("2008-2009", transferMatrix);
