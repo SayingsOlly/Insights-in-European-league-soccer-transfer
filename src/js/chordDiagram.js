@@ -1,18 +1,23 @@
-function yearChart(years, leagues){
+var yearScale;
+
+function yearChart(){
 
   var yearChart = d3.select("#year-chart");
 
   svgWidth = yearChart.node().getBoundingClientRect().width;
   svgHeight = 100;
 
+
   console.log(svgWidth);
   var svg = d3.select("#year-chart").append("svg")
       .attr("width",svgWidth)
       .attr("height",svgHeight);
 
+  setUpBrush(years, svg, svgWidth, svgHeight);
+
   console.log(years);
   //scale
-  var yearScale = d3.scaleLinear()
+  yearScale = d3.scaleLinear()
       .range([0,svgWidth]).domain([0,years.length]);
 
   var yearCircle = svg.selectAll("circle")
@@ -57,23 +62,26 @@ function yearChart(years, leagues){
     }
 
     d3.csv("../../data/transfer"+circle.datum()+".csv", function(error,csvData){
-      var transferMatrix = [];
 
+      var transferMatrix = [];
       csvData.forEach(function(d){
-            var item = [];
-            for(k in d){
-                item.push(d[k]*1000);
-            }
-            i++;
-            transferMatrix.push(item);
-        });
-      buildChord(leagues, transferMatrix);
+        var item = [];
+
+        for(k in d){
+          item.push(d[k]*1000);
+        }
+        transferMatrix.push(item);
+      });
+
+      console.log(transferMatrix);
+      buildChord(transferMatrix);
+
     });
   });
 
 }
 
-function buildChord(leagues, matrix){
+function buildChord(matrix){
   // get the svg.
   var svg = d3.select("#chordSVG");
 
@@ -81,6 +89,12 @@ function buildChord(leagues, matrix){
   var width = +svg.attr("width");
 
   var height = +svg.attr("height");
+
+  console.log(width);
+  console.log(height);
+
+  console.log("matrix");
+  console.log(matrix);
 
   var outerRadius = Math.min(width,height) * 0.5 - 40;
   var innerRadius = outerRadius - 30;
@@ -101,36 +115,15 @@ function buildChord(leagues, matrix){
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
       .datum(chord(matrix));
 
-  // var g = svg.selectAll(".chordGroup")
-  //     .data(chord(matrix));
-
-  // var gEnter = g.enter().append("g");
-  // g.exit().remove();
-  // g = gEnter.merge(g);
-
-  // g.attr("class","chordGroup")
-  //   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
   var group = g.append("g")
       .attr("class", "groups")
       .selectAll("g")
       .data(function(chords){
+        console.log(chords.groups);
         return chords.groups;
       })
       .enter()
       .append("g").attr("class","group");
-
-  // var group = g.selectAll(".groups")
-  //     .data(function(chords){
-  //       return chords.groups;
-  //     });
-
-  // var groupEnter = group.enter().append("g");
-  // group.exit().remove();
-  // group = groupEnter.merge(group);
-
-  // group.attr("class","groups")
-  //   .enter().append("g").attr("class","group");
 
   group.append("path")
     .attr("id", function(d){
@@ -164,6 +157,7 @@ function buildChord(leagues, matrix){
   //   .text(function(d){
   //     return leagues[d.index];
   //   });
+
 
   // Text Path.
   group.append("text")
@@ -320,6 +314,61 @@ function clearRobbin(d) {
     }
 }
 
-function update(year){
+function updateYears(yearList){
 
+  var transferMatrix = [];
+  leagues.forEach(function(d){
+    transferMatrix.push([0,0,0,0,0,0,0,0,0,0,0]);
+  });
+
+  yearList.forEach(function(year){
+    d3.csv("../../data/transfer"+year+".csv", function(error,csvData){
+      csvData.forEach(function(d,i){
+        var item = [];
+        for(k in d){
+          item.push(d[k]*1000);
+        }
+        transferMatrix[i] = transferMatrix[i].sumArray(item);
+      });
+    });
+  });
+
+  //console.log(transferMatrix);
+  buildChord(transferMatrix);
+}
+
+function setUpBrush(years, svg, svgWidth, svgHeight){
+
+  var brush = d3.brushX()
+      .extent([[-1,0],[svgWidth+1,svgHeight/2]]).on("end", brushed);
+
+  svg.append("g").attr("class","brushYear").call(brush);
+
+  function brushed(){
+    console.log("lalala");
+    var selection = d3.event.selection;
+    // var sb = self.svg.selectAll("rect");
+    var list = [];
+    for(var i=0; i<years.length; i++){
+      if(selection != null && yearScale(i+0.5) >= selection[0] && yearScale(i+0.6) <= selection[1]){
+        list.push(years[i]);
+      }
+    }
+
+    if(list.length!=0){
+      updateYears(list);
+    }
+  }
+}
+
+
+Array.prototype.sumArray = function (arr){
+    var sum = [];
+    if (arr != null && this.length == arr.length) {
+        for (var i = 0; i < arr.length; i++) {
+            sum.push(this[i] + arr[i]);
+        }
+    }
+
+    return sum;
 };

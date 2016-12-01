@@ -1,12 +1,11 @@
 var utils = {};
-
+var leagues = [];
+var years = ["2008-2009","2009-2010", '2010-2011', '2011-2012', '2012-2013', '2013-2014'];
 
 window.onload = function () {
-  var years = ["2008-2009","2009-2010", '2010-2011', '2011-2012', '2012-2013', '2013-2014'];
 
     d3.csv("../../data/transfer2008-2009.csv", function(error, csvData){
-        var leagues = [],
-            transferMatrix = [];
+        var transferMatrix = [];
         var i = 0;
         csvData.forEach(function(d){
             var item = [];
@@ -21,22 +20,22 @@ window.onload = function () {
             transferMatrix.push(item);
         });
       setUp(leagues, transferMatrix);
-      yearChart(years, leagues);
-        buildChord(leagues, transferMatrix);
-        d3.csv("../../data/team_transfer2008-2009.csv", function(error, csvData){
-            var teams = [],
-                teamTransfers = [];
-            var i = 0;
-            csvData.forEach(function(d){
-                for(k in d){
-                    if(i==0){
-                        teams.push({name:k+"", value: 0});
-                    }
-                }
-                i++;
-            });
+      yearChart();
+      buildChord(transferMatrix);
 
-            var teamNames = {};
+      d3.csv("../../data/team_transfer2008-2009.csv", function(error, csvData){
+        var teams = [], teamTransfers = [];
+        var i = 0;
+        csvData.forEach(function(d){
+          for(k in d){
+            if(i==0){
+              teams.push({name:k+"", value: 0});
+            }
+          }
+          i++;
+        });
+
+        var teamNames = {};
             //teams.sort(function (a,b) {return a.name > b.name ? 1 : (a.name < b.name ? -1 : 0);});
 
             teams.forEach(function (d, index) {
