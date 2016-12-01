@@ -321,6 +321,7 @@ function updateYears(yearList){
     transferMatrix.push([0,0,0,0,0,0,0,0,0,0,0]);
   });
 
+    var count = {value: 0};
   yearList.forEach(function(year){
     d3.csv("../../data/transfer"+year+".csv", function(error,csvData){
       csvData.forEach(function(d,i){
@@ -330,11 +331,12 @@ function updateYears(yearList){
         }
         transferMatrix[i] = transferMatrix[i].sumArray(item);
       });
+      count.value++;
+      if(count.value == yearList.length) {
+        buildChord(transferMatrix);
+      }
     });
   });
-
-  //console.log(transferMatrix);
-  buildChord(transferMatrix);
 }
 
 function setUpBrush(years, svg, svgWidth, svgHeight){
