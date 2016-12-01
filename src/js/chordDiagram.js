@@ -61,27 +61,12 @@ function yearChart(){
       circle.attr("class","highlighted");
     }
 
-    d3.csv("../../data/transfer"+circle.datum()+".csv", function(error,csvData){
-
-      var transferMatrix = [];
-      csvData.forEach(function(d){
-        var item = [];
-
-        for(k in d){
-          item.push(d[k]*1000);
-        }
-        transferMatrix.push(item);
-      });
-
-      console.log(transferMatrix);
-      buildChord(transferMatrix);
-
-    });
+    updateYears([circle.datum()]);
   });
 
 }
 
-function buildChord(matrix){
+function buildChord(matrix, len = 1){
   // get the svg.
   var svg = d3.select("#chordSVG");
 
@@ -178,7 +163,7 @@ function buildChord(matrix){
   //Tick.
   var groupTick = group.selectAll(".group-tick")
       .data(function(d){
-        return groupTicks(d,2e3);
+        return groupTicks(d,2e3*len);
       })
       .enter().append("g")
       .attr("class", "group-tick")
@@ -190,7 +175,8 @@ function buildChord(matrix){
 
   groupTick
     .filter(function(d){
-      return d.value % 5e3 == 0;
+      console.log(len);
+      return d.value % 2e4 == 0;
     })
     .append("text")
     .attr("x",8)
@@ -321,7 +307,8 @@ function updateYears(yearList){
     transferMatrix.push([0,0,0,0,0,0,0,0,0,0,0]);
   });
 
-    var count = {value: 0};
+  var count = {value: 0};
+  var max = {value:0};
   yearList.forEach(function(year){
     d3.csv("../../data/transfer"+year+".csv", function(error,csvData){
       csvData.forEach(function(d,i){
@@ -333,7 +320,7 @@ function updateYears(yearList){
       });
       count.value++;
       if(count.value == yearList.length) {
-        buildChord(transferMatrix);
+        buildChord(transferMatrix, yearList.length);
       }
     });
   });
