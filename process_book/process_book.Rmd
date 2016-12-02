@@ -90,18 +90,40 @@ The logos region shown in Figure 7 aims at selecting leagues and teams. The shor
 
 ![The logos region](chart5.png)
 
+There is a time line below the logos region, we can either select one year or use brush to select multiple years. The chord diagram  and the force direct diagrams will use the data in selected period.
+
+![Time line with year brush \label{brush}](chart5.png)
+
+
 The player transfer are shown in two perspectives, the number of players transfered and the amount of money spent. 
 
-In the following description, we take the player version as the example. The chord  diagram shows the player transfer between leagues. As shown in Figure \ref{1}, a curve  bewteen two leagues stands for the player transfer between these leagues and the thickness of the curve is propotional to the number of players transferd out from the league. The selected leagues or selected teams are highlight by making irrelevant curves become transparent. We can get approximate number by reading the scale outside the circle and the precise number by reading from tooltips when mouseover.
+In the following description, we take the player version as the example. The chord  diagram shows the player transfer between leagues. Figure \ref{1}, A curve  bewteen two leagues stands for the player transfer between these leagues and the thickness of the curve is propotional to the number of players transferd out from the league. The selected leagues or selected teams are highlight by making irrelevant curves become transparent. We can get approximate number by reading the scale outside the circle and the precise number by reading from tooltips when mouseover.
 
 
-![ Chord diagram with tooltip\label{1}](chart6.png)
+![Chord diagrams\label{1}](chart6.png)
+
+There are two force direct diagrams in Figure \ref{2}, where one is for selected leagures and the other is for selected teams. When we click a node, this node comes into center surounded by the directly connected node and others disappear to aviod irrelevant information interfering with users. When mouse over a node, a tooltip comes out, where we can get information as follows.
+
+  + The theam's name
+  + The league that this team belongs to
+  + The total number of transfer players of this team
+  + The number of player transfered in and out this team
+  + The top four teams which has the greatest players transfered in
+  + The top four teams which has the greatest players transfered out
 
 
+![Force direct diagrams with tooltip2\label{2}](chart7.png)
 
+ There is a color block before each team, which indicats the league that this team belongs to. There is a percentage after each team, which means the number of players transfered from (into) this team into (from) the give team (mouse-over-team) out of the total number of playe transfered into the given team.
+ 
+ Multiple teams from either one league or  different leagues can be choose in the logo region, and then selected teams and teams directly connected with these team are displayed such like Figure \ref{8} and Figure \ref{9}. At this time, curves in chord diagrams contains these teams are highlighted.
+ 
+ ![Selected teams in from one league \label{8}](chart8.png)
+
+ ![Selected teams in from different leagues \label{8}](chart9.png)
+ 
 ### Interaction
-We pay many efforts in interaction which we think can evoke people's intresest in exploring data. In our project, all chart are correlative, which means leagues or teams can be selected in any chart and the related information will be filtered out in other chart.
-
+We pay many efforts in interaction which we think can evoke people's intresest in exploring data. In our project, all chart are correlative, which means leagues or teams can be selected in any chart and the related information will be filtered out in other chart. 
 ##Evaluation
 
 
