@@ -37,11 +37,7 @@ function setUp(leagues, matrix) {
     /*
      Color scale.
      */
-
-   
     utils.color = d3.scaleOrdinal()
         .domain(d3.range(11))
         .range(["#1f78b4","#cab2d6","#b2df8a", "#33a02c",  "#fb9a99", "#e31a1c", "#fdbf6f","#ff7f00","#6a3d9a","#a6cee3", "#ffff99"]);
- 
-
 }

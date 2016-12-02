@@ -63,6 +63,7 @@ body {
     stroke: #fff;
     stroke-width: 1.5px;
     transition: opacity 0.6s, stroke-opacity 0.6s;
+    cursor: pointer;
 }
 
 .nodes circle.selected {
@@ -70,15 +71,13 @@ body {
 }
 
 .nodes circle.not-selected, .links line.not-selected {
-    /*fill: lightgrey;*/
-    /*stroke: lightgrey;*/
     stroke-opacity: 0.3;
     opacity: 0.15;
 }
 
 .nodes text.valueTag, .nodes text.nameTag {
     text-anchor: middle;
-    cursor: default;
+    cursor: pointer;
 }
 
 .year-circle {
@@ -146,9 +145,19 @@ body {
     transform: scaleY(-1);
 }
 
+#year-trend-svg .labels text{
+    transform: scaleY(-1);
+}
+
 #year-trend-svg .paths path{
     fill: none;
     stroke: white;
     stroke-width: 1.5px;
+    cursor: pointer;
+}
+
+#year-trend-svg .overlay {
+    fill: grey;
+    opacity: 0.5;
     cursor: pointer;
 }

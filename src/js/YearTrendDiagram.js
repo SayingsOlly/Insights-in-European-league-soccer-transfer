@@ -6,29 +6,40 @@ function YearTrendDiagram() {
     var me = this;
 
     var count = {value: 0};
-    this.yearValues.forEach(function (year) {
+    this.yearValues.forEach(function (year, yearIndex) {
         loadYears([year+'-'+(year+1)], function (d) {
             var sum = 0;
             var leagueSums = [],
                 acSum = {v:0};
             d.forEach(function (dd, i) {
-                dd.forEach(function (ddd) {
-                    sum += ddd / 1000;
+                dd.forEach(function (ddd, I) {
+                    sum += I == i ? 0 : (ddd / 1000);
                 });
+                for (var I = 0; I < years.length; I++) {
+                    sum += I == i ? 0 : (d[I][i] / 1000);
+                }
             });
 
             d.forEach(function (dd, i) {
-                var tmpSum = 0;
-                dd.forEach(function (ddd) {
-                    tmpSum += ddd / 1000;
+                var outSum = 0;
+                var inSum = 0;
+                dd.forEach(function (ddd, I) {
+                    outSum += I == i ? 0 : ddd / 1000;
                 });
-                leagueSums.push(tmpSum);
+                for (var I = 0; I < years.length; I++) {
+                    inSum += I == i ? 0 : (d[I][i] / 1000);
+                }
+                leagueSums.push(inSum + outSum);
                 me.leagueAcSums[i] || me.leagueAcSums.push([]);
                 me.leagueAcSums[i].push({
-                    acSum: sum - acSum.v - tmpSum,
-                    value: tmpSum
+                    acSum: sum - acSum.v - outSum - inSum,
+                    outValue: outSum,
+                    inValue: inSum,
+                    value: inSum + outSum,
+                    leagueIndex: i
+                    //yearIndex: years.findIndex(function (d) { return d == (year+'-'+(year+1)); })
                 });
-                acSum.v += tmpSum;
+                acSum.v += outSum + inSum;
             });
 
             me.yearTransferMetrix.push({
@@ -55,7 +66,7 @@ YearTrendDiagram.prototype.init = function (yearTransferMetrix) {
     var svgBounds = this.svg.node().getBoundingClientRect(),
         xAxisWidth = 40,
         yAxisHeight = 40,
-        figureWidth = svgBounds.width - xAxisWidth,
+        figureWidth = svgBounds.width - xAxisWidth - 13,
         figureHeight = svgBounds.height - yAxisHeight,
         dataLength = years.length,
         me = this;
@@ -87,7 +98,6 @@ YearTrendDiagram.prototype.init = function (yearTransferMetrix) {
         .domain([0, d3.max(this.yearTransferMetrix, function (d) {return d.sumValue;})])
         .range([figureHeight, 20]);
 
-    console.log("original " + d3.max(this.yearTransferMetrix, function (d) {return d.sumValue;}));
     this.yAxis = d3.axisLeft();
     this.yAxis.ticks(10)
         .scale(this.yAxisScale);
@@ -105,7 +115,26 @@ YearTrendDiagram.prototype.init = function (yearTransferMetrix) {
             return i < dataLength ? me.yScale(d.acSum + d.value) : me.yScale(0);
         });
 
+    this.overLaylineGenerator = d3.line()
+        .x(function (d, i) {
+            return i < dataLength ? me.iScale(i) : me.iScale(2 * dataLength - i - 1);
+        })
+        .y(function (d, i) {
+            return i < dataLength ? me.yScale(d.acSum + d.value) : me.yScale(d.acSum + d.inValue);
+        });
+
     this.path = this.svg.select('.paths').selectAll('path').data(this.leagueAcSums);
+    this.svg.select('.overlay').on('click', function (d) {
+        var tmp = new Set();
+        tmp.add(d[0].leagueIndex);
+        leagueSelectionBar.selectLeague(tmp, true, true);
+    }).on('mouseout', function (d) {
+        me.svg.select('.overlay')
+            .style('display', 'none');
+        me.svg.select('.labels').selectAll('text')
+            .style('display', 'none');
+    });
+
     var newPath = this.path.enter().append('path')
         .attr('d', this.aclineGenerator)
         .style('fill', function (d, i) {
@@ -115,19 +144,44 @@ YearTrendDiagram.prototype.init = function (yearTransferMetrix) {
             var tmp = new Set();
             tmp.add(i);
             leagueSelectionBar.selectLeague(tmp, true, true);
+        })
+        .on('mouseover', function (d, i) {
+            var newD = [];//d.slice(0).splice(0, years.length);
+            var tmp = [];
+            d.forEach(function (d, i) {
+                i <  years.length && newD.push(d);
+            });
+            newD.forEach(function (d) {tmp.unshift(d)});
+            tmp.forEach(function (d) {newD.push(d)});
+            me.svg.select('.overlay').data([newD])
+                .style('display', 'inherit')
+                .attr('d', me.overLaylineGenerator);
+
+            me.labels =  me.svg.select('.labels').selectAll('text').data(newD);
+            var newLabels = me.labels.enter().append('text');
+
+            me.labels.exit().remove();
+            me.labels = newLabels.merge(me.labels);
+
+            me.labels
+                .style('display', 'inherit')
+                .html(function (d, i) {
+                    var some = i < years.length ? ' out' : ' in';//(i == years.length * 2 - 1 ? ' in' : '');
+                    return (i < years.length ? d.outValue : d.inValue) + some;
+                })
+                .attr('x', function (d, i) {
+                    return i < years.length ? me.iScale(i) : me.iScale(2 * years.length - i - 1);
+                })
+                .attr('y', function (d, i) {
+                    return i < years.length ? me.yAxisScale(d.acSum + d.value) : me.yAxisScale(d.acSum + d.inValue);
+                });
         });
     this.path.exit().remove();
     this.path = newPath.merge(this.path);
 
-    //this.lineGenerator = d3.line()
-    //    .x(function (d, i) {
-    //        return i < dataLength ? me.iScale(i) : me.iScale(d);
-    //    })
-    //    .y(function (d, i) {
-    //        return i < dataLength ? me.yScale(d.value) : me.yScale(0);
-    //    });
-}
-
+    this.svg.select('.labels')
+        .style("transform", "translate(" + 0 + "px," + svgBounds.height + "px)");
+};
 
 YearTrendDiagram.prototype.showLeagues = function (leagues) {
     var max = this.buildACfromValue(leagues),
@@ -141,10 +195,28 @@ YearTrendDiagram.prototype.showLeagues = function (leagues) {
 
     this.path.style('display', function (d, i) {
         return leagues.size == 0 || leagues.has(i) ? 'inherit' : 'none';
-    }).filter(function (d, i) {
-        return leagues.size == 0 || leagues.has(i);
     }).transition().duration(1300)
-        .attr('d', this.aclineGenerator);
+        .attr('d', function (d, i) {
+            return leagues.size == 0 || leagues.has(i) ? me.aclineGenerator(d) : '';
+        });
+
+    me.svg.select('.overlay')
+        .transition().duration(1300)
+        .attr('d', me.overLaylineGenerator);
+
+    this.svg.select('.labels').selectAll('text')
+        .html(function (d, i) {
+            var some = i < years.length ? ' out' : ' in';//(i == years.length * 2 - 1 ? ' in' : '');
+            //var some = i == 0 ? 'transfer out' : (i == years.length * 2 - 1 ? 'transfer in' : '');
+            return (i < years.length ? d.outValue : d.inValue) + some;
+        })
+        .transition().duration(1300)
+        .attr('x', function (d, i) {
+            return i < years.length ? me.iScale(i) : me.iScale(2 * years.length - i - 1);
+        })
+        .attr('y', function (d, i) {
+            return i < years.length ? me.yAxisScale(d.acSum + d.value) : me.yAxisScale(d.acSum + d.inValue);
+        });
 };
 
 YearTrendDiagram.prototype.buildACfromValue = function (leagues) {
@@ -156,22 +228,29 @@ YearTrendDiagram.prototype.buildACfromValue = function (leagues) {
         var acSum = {v:0};
 
         d.forEach(function (dd, i) {
-            if (leagues.size != 0 && !leagues.has(i))
-                return ;
-            dd.forEach(function (ddd) {
-                sum += ddd / 1000;
-            });
+            if (leagues.size == 0 || leagues.has(i)) {
+                dd.forEach(function (ddd, I) {
+                    sum += I == i ? 0 : (ddd / 1000);
+                });
+                for (var I = 0; I < years.length; I++) {
+                    sum += I == i ? 0 : (d[I][i] / 1000);
+                }
+            }
         });
 
         d.forEach(function (dd, i) {
-            if (leagues.size != 0 && !leagues.has(i))
-                return ;
-            var tmpSum = 0;
-            dd.forEach(function (ddd) {
-                tmpSum += ddd / 1000;
-            });
-            me.leagueAcSums[i][yearIndex].acSum = sum - acSum.v - tmpSum;
-            acSum.v += tmpSum;
+            if (leagues.size == 0 || leagues.has(i)) {
+                var outSum = 0;
+                var inSum = 0;
+                dd.forEach(function (ddd, I) {
+                    outSum += I == i ? 0 : ddd / 1000;
+                });
+                for (var I = 0; I < years.length; I++) {
+                    inSum += I == i ? 0 : (d[I][i] / 1000);
+                }
+                me.leagueAcSums[i][yearIndex].acSum = sum - acSum.v - outSum - inSum;
+                acSum.v += outSum + inSum;
+            }
         });
         max.v = Math.max(max.v, sum);
     });
