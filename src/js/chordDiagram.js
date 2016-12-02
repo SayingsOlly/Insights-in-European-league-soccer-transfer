@@ -160,7 +160,7 @@ function buildChord(matrix, len = 1){
   //Tick.
   var groupTick = group.selectAll(".group-tick")
       .data(function(d){
-        return groupTicks(d,5e3*len);
+        return groupTicks(d,5e4*len);
       })
       .enter().append("g")
       .attr("class", "group-tick")
@@ -173,7 +173,7 @@ function buildChord(matrix, len = 1){
   groupTick
     .filter(function(d){
       console.log(len);
-      return d.value % 5e4 == 0;
+      return d.value % 1e5 == 0;
     })
     .append("text")
     .attr("x",8)
@@ -200,9 +200,9 @@ function buildChord(matrix, len = 1){
     .html(function(d){
       var html = "";
       html += "<div>"+leagues[d.source.index]+" to "+leagues[d.target.index]+"</div></li>";
-      html += "<div>"+d.source.value/1000+" players</div>";
+      html += "<div> €"+(d.source.value/1000).toFixed(2)+"</div>";
       html += "<div>"+leagues[d.target.index]+" to "+leagues[d.source.index]+"</div>";
-      html += "<div>"+d.target.value/1000+" players</div>";
+      html += "<div> €"+(d.target.value/1000).toFixed(2)+"</div>";
 
       return html;
     });
