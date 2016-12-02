@@ -247,8 +247,8 @@ ForceDirect.prototype.selectLeague = function (league, leagues) {
     var svg = d3.select("#force-direct-svg"),
         me = this;
 
+    this.deselectNode();
     if (leagues.size == 0) {
-        this.deselectNode();
         this.updateYear();
     } else {
         var names = new Set();
@@ -286,9 +286,15 @@ ForceDirect.prototype.selectNodes = function (teamNames) {
     })
     this.selectMode = true;
     //this.simulation.force('link').distance(190);
-    this.forceLink.distance(Math.max(190 / teamNames.size, 100));
-    this.forceManyBody.strength(-120);
-    this.forceCenter.strength(1.5);
+    if (me.teams.length > 4) {
+        this.forceLink.distance(100);
+        this.forceManyBody.strength(-30);
+        this.forceCenter.strength(1);
+    } else {
+        this.forceLink.distance(Math.max(190 / me.teams.length, 100));
+        this.forceManyBody.strength(-120);
+        this.forceCenter.strength(1.5);
+    }
     //this.simulation.force("charge").strength(-4000 / (teamNames.size * 2 - 1));
     this.updateYear(null, true);
 }

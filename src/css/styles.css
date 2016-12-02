@@ -26,6 +26,10 @@ body {
     fill-opacity: 0.67;
 }
 
+.group * {
+    cursor: pointer;
+}
+
 .d3-tip {
     /*line-height: 5;*/
     padding-left: 10px;
@@ -135,5 +139,16 @@ body {
     max-height: 65px;
     vertical-align: middle;
     margin: 0 10px 4px;
+    cursor: pointer;
+}
+
+#year-trend-svg {
+    transform: scaleY(-1);
+}
+
+#year-trend-svg .paths path{
+    fill: none;
+    stroke: white;
+    stroke-width: 1.5px;
     cursor: pointer;
 }

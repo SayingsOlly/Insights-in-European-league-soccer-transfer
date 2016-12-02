@@ -58,7 +58,6 @@ function yearChart(){
     circle.classed('selected', true);
 
     updateYears([circle.datum()]);
-    forceDirect.loadYear(circle.datum());
     clearBrush(svg);
   });
 
@@ -239,29 +238,31 @@ function buildChord(matrix, len = 1){
     .on("mouseout", clearRobbin);
   d3.selectAll(".ribbons").call(tip);
 
-  var selectedSet = new Set();
-
   d3.selectAll(".groups").selectAll("g")
-    .on("click", function(d){
-      var thisGroup = d3.select(this);
-      if(thisGroup.attr("class") == "selected"){
-        thisGroup.attr("class", "");
-        selectedSet.delete(thisGroup.datum().index);
-      }else{
-        thisGroup.attr("class", "selected");
-        selectedSet.add(thisGroup.datum().index);
-      }
-      teams(selectedSet);
+    .on("click", function () {
+        var thisGroup = d3.select(this);
+        if(chordSelectedSet.has(thisGroup.datum().index)){
+            chordSelectedSet.delete(thisGroup.datum().index);
+        }else{
+            chordSelectedSet.add(thisGroup.datum().index);
+        }
+        teams(chordSelectedSet, true);
     });
 
 };
+var chordSelectedSet = new Set();
+function teams(selectedLeagues, updateExternal){
+    d3.selectAll(".groups").selectAll("g")
+        .classed('selected', function (d, i) {
+           return selectedLeagues.has(d3.select(this).datum().index);
+        });
+    chordSelectedSet = selectedLeagues;
 
-
-function teams(selectedLeagues){
-  console.log(selectedLeagues);
   selectRobbin(undefined, undefined, undefined, selectedLeagues);
-  forceDirect.selectLeague(undefined, selectedLeagues);
-  leagueSelectionBar.selectLeague(selectedLeagues);
+  if (updateExternal) {
+      forceDirect.selectLeague(undefined, selectedLeagues);
+      leagueSelectionBar.selectLeague(selectedLeagues);
+  }
 }
 var cache;
 function selectRobbin(d, _, _, leagues) {
@@ -299,28 +300,35 @@ function clearRobbin(d) {
 
 function updateYears(yearList){
   forceDirect.loadYears(yearList, leagues);
-  var transferMatrix = [];
-  leagues.forEach(function(d){
-    transferMatrix.push([0,0,0,0,0,0,0,0,0,0,0]);
+  leagueSelectionBar.reset();
+  loadYears(yearList, function (transferMatrix) {
+    buildChord(transferMatrix, yearList.length);
   });
+}
 
-  var count = {value: 0};
-  var max = {value:0};
-  yearList.forEach(function(year){
-    d3.csv("../../data/transfer"+year+".csv", function(error,csvData){
-      csvData.forEach(function(d,i){
-        var item = [];
-        for(k in d){
-          item.push(d[k]*1000);
-        }
-        transferMatrix[i] = transferMatrix[i].sumArray(item);
-      });
-      count.value++;
-      if(count.value == yearList.length) {
-        buildChord(transferMatrix, yearList.length);
-      }
+function loadYears(yearList, fn) {
+    var transferMatrix = [];
+    leagues.forEach(function(d){
+        transferMatrix.push([0,0,0,0,0,0,0,0,0,0,0]);
     });
-  });
+
+    var count = {value: 0};
+    var max = {value:0};
+    yearList.forEach(function(year){
+        d3.csv("../../data/transfer"+year+".csv", function(error,csvData){
+            csvData.forEach(function(d,i){
+                var item = [];
+                for(k in d){
+                    item.push(d[k]*1000);
+                }
+                transferMatrix[i] = transferMatrix[i].sumArray(item);
+            });
+            count.value++;
+            if(count.value == yearList.length) {
+                fn(transferMatrix);
+            }
+        });
+    });
 }
 
 function setUpBrush(years, svg, svgWidth, svgHeight){

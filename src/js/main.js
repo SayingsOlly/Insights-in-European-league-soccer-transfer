@@ -5,8 +5,6 @@ var forceDirect, leagueSelectionBar, teamSelectionBar, yearTrendDiagram, teamDet
 
 window.onload = function () {
     forceDirect = new ForceDirect();
-    yearTrendDiagram = new YearTrendDiagram();
-    teamDetailDiagram = new TeamDetailDiagram();
 
     d3.csv("../../data/transfer2008-2009.csv", function(error, csvData){
         var transferMatrix = [];
@@ -25,6 +23,8 @@ window.onload = function () {
         });
 
       setUp(leagues, transferMatrix);
+      yearTrendDiagram = new YearTrendDiagram();
+      teamDetailDiagram = new TeamDetailDiagram();
       teamSelectionBar = new TeamSelectionBar(forceDirect);
       leagueSelectionBar = new LeagueSelectionBar(teamSelectionBar, forceDirect);
       yearChart();

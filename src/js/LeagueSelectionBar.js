@@ -21,13 +21,13 @@ function LeagueSelectionBar(teamSelectionBar, forceDirect) {
     })
 }
 
-LeagueSelectionBar.prototype.selectLeague = function (leaguesIndex) {
+LeagueSelectionBar.prototype.selectLeague = function (leaguesIndex, downwardRobbin, downwardForce) {
     var me = this;
     this.selectedLeagues = new Set();
     leaguesIndex.forEach(function (leagueIndex) {
         me.selectedLeagues.add(leagues[leagueIndex]);
     });
-    this.updateLeague();
+    this.updateLeague(downwardRobbin, downwardForce);
 }
 
 LeagueSelectionBar.prototype.selectTeam = function (leagueIndex, teamName) {
@@ -38,7 +38,7 @@ LeagueSelectionBar.prototype.selectTeam = function (leagueIndex, teamName) {
     this.teamSelectionBar.selectTeam(teamName);
 }
 
-LeagueSelectionBar.prototype.updateLeague = function (downward, downwardForce) {
+LeagueSelectionBar.prototype.updateLeague = function (downwardRobbin, downwardForce) {
     var me= this;
     if (me.selectedLeagues.size == 0) {
         me.leagues.classed('not-selected', false);
@@ -48,15 +48,20 @@ LeagueSelectionBar.prototype.updateLeague = function (downward, downwardForce) {
         });
     }
     teamSelectionBar.showLeagues(me.selectedLeagues);
+    var indexSet = new Set();
+    me.selectedLeagues.forEach(function (league) {
+        indexSet.add(leagues.findIndex(function (d) {
+            return d == league;
+        }));
+    });
 
-    if (downward) {
-        var indexSet = new Set();
-        me.selectedLeagues.forEach(function (league) {
-            indexSet.add(leagues.findIndex(function (d) {
-                return d == league;
-            }));
-        });
-        selectRobbin(undefined, undefined, undefined, indexSet);
-        downwardForce && forceDirect.selectLeague(null, indexSet);
-    }
+    yearTrendDiagram.showLeagues(indexSet);
+
+    downwardRobbin && teams(indexSet, false);
+    downwardForce && forceDirect.selectLeague(null, indexSet);
+}
+
+LeagueSelectionBar.prototype.reset = function () {
+  this.selectedLeagues = new Set();
+  this.updateLeague();
 }
