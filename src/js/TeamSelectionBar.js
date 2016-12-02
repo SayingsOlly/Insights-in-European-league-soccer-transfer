@@ -17,15 +17,7 @@ function TeamSelectionBar(forceDirect) {
         } else {
             me.selectedTeams.add(team.attr('name'));
         }
-        if (me.selectedTeams.size == 0) {
-            me.images.classed('not-selected', false);
-        } else {
-            me.images.classed('not-selected', function () {
-                return !me.selectedTeams.has(d3.select(this).attr('name'));
-            });
-
-            forceDirect.selectNodes(me.selectedTeams);
-        }
+        me.updateTeams();
     });
 }
 
@@ -36,4 +28,23 @@ TeamSelectionBar.prototype.showLeagues = function (leagues) {
     this.leagues.classed('selected', function () {
         return leagues.has(d3.select(this).attr('id').slice(5).replace(/-/gm, ' '));
     });
+}
+
+TeamSelectionBar.prototype.selectTeam = function (teamName) {
+    this.selectedTeams = new Set();
+    this.selectedTeams.add(teamName);
+    this.updateTeams();
+}
+
+TeamSelectionBar.prototype.updateTeams = function () {
+    var me = this;
+    if (me.selectedTeams.size == 0) {
+        me.images.classed('not-selected', false);
+    } else {
+        me.images.classed('not-selected', function () {
+            return !me.selectedTeams.has(d3.select(this).attr('name'));
+        });
+
+        forceDirect.selectNodes(me.selectedTeams);
+    }
 }

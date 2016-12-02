@@ -260,6 +260,8 @@ function buildChord(matrix, len = 1){
 function teams(selectedLeagues){
   console.log(selectedLeagues);
   selectRobbin(undefined, undefined, undefined, selectedLeagues);
+  forceDirect.selectLeague(undefined, selectedLeagues);
+  leagueSelectionBar.selectLeague(selectedLeagues);
 }
 var cache;
 function selectRobbin(d, _, _, leagues) {
@@ -273,7 +275,6 @@ function selectRobbin(d, _, _, leagues) {
         ribbon.transition().duration(600)
             .style("opacity", 1.0);
         tip.show(d);
-        forceDirect.selectLeague(d.target.index);
     } else {
         cache = leagues;
       var ribbons = d3.select(".ribbons").selectAll("path");
@@ -281,7 +282,6 @@ function selectRobbin(d, _, _, leagues) {
             .style("opacity", function (d) {
                 return leagues.size == 0 || leagues.has(d.target.index) || leagues.has(d.source.index) ? 1.0 : 0.1;
             });
-        forceDirect.selectLeague(undefined, leagues);
     }
 }
 
@@ -294,7 +294,6 @@ function clearRobbin(d) {
         var ribbons = d3.select(".ribbons").selectAll("path");
         ribbons.transition().duration(600)
             .style("opacity", 1.0);
-        forceDirect.selectLeague(null, cache);
     }
 }
 

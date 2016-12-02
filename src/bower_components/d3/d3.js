@@ -10273,7 +10273,8 @@ var resquarify = (function custom(ratio) {
 })(phi);
 
 var center$1 = function(x, y) {
-  var nodes;
+  var nodes,
+      strength = 1;
 
   if (x == null) x = 0;
   if (y == null) y = 0;
@@ -10290,7 +10291,7 @@ var center$1 = function(x, y) {
     }
 
     for (sx = sx / n - x, sy = sy / n - y, i = 0; i < n; ++i) {
-      node = nodes[i], node.x -= sx, node.y -= sy;
+      node = nodes[i], node.x -= sx * strength, node.y -= sy * strength;
     }
   }
 
@@ -10306,6 +10307,9 @@ var center$1 = function(x, y) {
     return arguments.length ? (y = +_, force) : y;
   };
 
+  force.strength = function(_) {
+    strength = _;
+  };
   return force;
 }
 

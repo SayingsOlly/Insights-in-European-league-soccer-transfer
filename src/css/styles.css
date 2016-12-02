@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  padding: 60px 10px 10px;
+  padding: 0 10px 10px;
   position: relative;
   font: 15px "Courier New", Courier, monospace;
   display: flex;
@@ -69,7 +69,7 @@ body {
     /*fill: lightgrey;*/
     /*stroke: lightgrey;*/
     stroke-opacity: 0.3;
-    opacity: 0.3;
+    opacity: 0.15;
 }
 
 .nodes text.valueTag, .nodes text.nameTag {
@@ -114,7 +114,7 @@ body {
 
 #leagues-selections div.not-selected,
 #teams-selections img.not-selected {
-    opacity: 0.3;
+    opacity: 0.15;
 }
 
 #teams-selections {
@@ -136,38 +136,4 @@ body {
     vertical-align: middle;
     margin: 0 10px 4px;
     cursor: pointer;
-}
-
-.collapsable {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 0;
-}
-
-.collapsable .content {
-    display: none;
-    background: lightyellow;
-}
-
-.collapsable:hover .content {
-    display: inherit;
-}
-
-.collapsable .hover-handle {
-    background: lightgrey;
-    height: 30px;
-    width: 100%;
-    position: absolute;
-    text-align: center;
-    line-height: 30px;
-}
-
-.collapsable .hover-handle img {
-    height: 19px;
-    position: absolute;
-    top: -4px;
-    bottom: 0;
-    margin: auto;
-    margin-left: 10px;
 }

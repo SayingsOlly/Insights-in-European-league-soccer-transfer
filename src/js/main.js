@@ -1,10 +1,12 @@
 var utils = {};
 var leagues = [];
 var years = ["2008-2009","2009-2010", '2010-2011', '2011-2012', '2012-2013', '2013-2014'];
-var forceDirect, leagueSelectionBar, teamSelectionBar;
+var forceDirect, leagueSelectionBar, teamSelectionBar, yearTrendDiagram, teamDetailDiagram;
 
 window.onload = function () {
     forceDirect = new ForceDirect();
+    yearTrendDiagram = new YearTrendDiagram();
+    teamDetailDiagram = new TeamDetailDiagram();
 
     d3.csv("../../data/transfer2008-2009.csv", function(error, csvData){
         var transferMatrix = [];
