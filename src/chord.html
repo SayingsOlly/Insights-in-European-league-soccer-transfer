@@ -110,21 +110,36 @@
             name="KV Kortrijk" src="../data/teams/Belgium Jupiler League/KV Kortrijk.png"><img name="Tubize" src="../data/teams/Belgium Jupiler League/Tubize.jpg"><img name="Mouscron" src="../data/teams/Belgium Jupiler League/Mouscron.jpg"><img name="KVC Westerlo" src="../data/teams/Belgium Jupiler League/KVC Westerlo.png"><img name="Sporting Charleroi" src="../data/teams/Belgium Jupiler League/Sporting Charleroi.gif"></div>
 </div>
     </div>
-    <div class="hover-handle">
-        Leagues & Team Filters
-        <img src="css/downArrow.png">
-    </div>
 </div>
 <div id="year-chart" class="view">
 </div>
 <div id="chord" class="view half-width">
-    <h1> Player Transition </h1>
+    <h1> League Transition Trend</h1>
     <svg id="chordSVG" width="750" height="750"></svg>
 </div>
 <div id="force-direct" class="view half-width">
     <h1> Team Relationship </h1>
     <svg id="force-direct-svg" width="750" height="750"></svg>
 </div>
+<div id="year-trend" class="view half-width">
+    <h1> Transition Trend Over Years</h1>
+    <svg id="year-trend-svg" width="900" height="500">
+        <g id="xAxis"></g>
+        <g id="yAxis"></g>
+        <g class="paths"></g>
+        <path class="overlay"></path>
+        <g class="labels"></g>
+    </svg>
+</div>
+<div id="team-detail-chart" class="view half-width">
+    <h1> Team Relationship Detail</h1>
+    <svg id="team-detail-chart-svg" width="750" height="750">
+        <g id="xAxis"></g>
+        <g id="yAxis"></g>
+    </svg>
+</div>
+<script type="application/javascript" src="js/YearTrendDiagram.js"></script>
+<script type="application/javascript" src="js/TeamDetailDiagram.js"></script>
 <script type="application/javascript" src="js/TeamSelectionBar.js"></script>
 <script type="application/javascript" src="js/LeagueSelectionBar.js"></script>
 <script type="application/javascript" src="js/chordDiagram.js"></script>

@@ -1,7 +1,7 @@
 var utils = {};
 var leagues = [];
 var years = ["2008-2009","2009-2010", '2010-2011', '2011-2012', '2012-2013', '2013-2014'];
-var forceDirect, leagueSelectionBar, teamSelectionBar;
+var forceDirect, leagueSelectionBar, teamSelectionBar, yearTrendDiagram, teamDetailDiagram;
 
 window.onload = function () {
     forceDirect = new ForceDirect();
@@ -23,6 +23,8 @@ window.onload = function () {
         });
 
       setUp(leagues, transferMatrix);
+      yearTrendDiagram = new YearTrendDiagram();
+      teamDetailDiagram = new TeamDetailDiagram();
       teamSelectionBar = new TeamSelectionBar(forceDirect);
       leagueSelectionBar = new LeagueSelectionBar(teamSelectionBar, forceDirect);
       yearChart();
@@ -37,5 +39,5 @@ function setUp(leagues, matrix) {
      */
     utils.color = d3.scaleOrdinal()
         .domain(d3.range(11))
-        .range(["#234928", "#AFDD89", "#957244", "#F26223", "#011227", "#C34222", "#F11223", "#A26229", "#807652", "#640928", "#E78271"]);
+        .range(["#1f78b4","#cab2d6","#b2df8a", "#33a02c",  "#fb9a99", "#e31a1c", "#fdbf6f","#ff7f00","#6a3d9a","#a6cee3", "#ffff99"]);
 }

@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  padding: 60px 10px 10px;
+  padding: 0 10px 10px;
   position: relative;
   font: 15px "Courier New", Courier, monospace;
   display: flex;
@@ -24,6 +24,10 @@ body {
 
 .ribbons {
     fill-opacity: 0.67;
+}
+
+.group * {
+    cursor: pointer;
 }
 
 .d3-tip {
@@ -59,6 +63,7 @@ body {
     stroke: #fff;
     stroke-width: 1.5px;
     transition: opacity 0.6s, stroke-opacity 0.6s;
+    cursor: pointer;
 }
 
 .nodes circle.selected {
@@ -66,15 +71,13 @@ body {
 }
 
 .nodes circle.not-selected, .links line.not-selected {
-    /*fill: lightgrey;*/
-    /*stroke: lightgrey;*/
     stroke-opacity: 0.3;
-    opacity: 0.3;
+    opacity: 0.15;
 }
 
 .nodes text.valueTag, .nodes text.nameTag {
     text-anchor: middle;
-    cursor: default;
+    cursor: pointer;
 }
 
 .year-circle {
@@ -114,7 +117,7 @@ body {
 
 #leagues-selections div.not-selected,
 #teams-selections img.not-selected {
-    opacity: 0.3;
+    opacity: 0.15;
 }
 
 #teams-selections {
@@ -138,36 +141,23 @@ body {
     cursor: pointer;
 }
 
-.collapsable {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 0;
+#year-trend-svg {
+    transform: scaleY(-1);
 }
 
-.collapsable .content {
-    display: none;
-    background: lightyellow;
+#year-trend-svg .labels text{
+    transform: scaleY(-1);
 }
 
-.collapsable:hover .content {
-    display: inherit;
+#year-trend-svg .paths path{
+    fill: none;
+    stroke: white;
+    stroke-width: 1.5px;
+    cursor: pointer;
 }
 
-.collapsable .hover-handle {
-    background: lightgrey;
-    height: 30px;
-    width: 100%;
-    position: absolute;
-    text-align: center;
-    line-height: 30px;
-}
-
-.collapsable .hover-handle img {
-    height: 19px;
-    position: absolute;
-    top: -4px;
-    bottom: 0;
-    margin: auto;
-    margin-left: 10px;
+#year-trend-svg .overlay {
+    fill: grey;
+    opacity: 0.5;
+    cursor: pointer;
 }
