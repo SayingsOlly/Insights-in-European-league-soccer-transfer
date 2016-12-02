@@ -142,25 +142,25 @@ function buildChord(matrix, len = 1){
 
 
   // Text Path.
-  group.append("text")
-    .attr("x",6)
-    .attr("dy",15)
-      .style("font", "40px")
-    .append("textPath")
-    .style("fill","black")
+  // group.append("text")
+  //   .attr("x",6)
+  //   .attr("dy",15)
+  //     .style("font", "40px")
+  //   .append("textPath")
+  //   .style("fill","black")
 
-    .attr("xlink:href", function(d){
-      return "#path"+d.index;
-    })
-    .text(function(d){
-      console.log(d);
-      return d.value > 20000 ? leagues[d.index] : "";
-    });
+  //   .attr("xlink:href", function(d){
+  //     return "#path"+d.index;
+  //   })
+  //   .text(function(d){
+  //     console.log(d);
+  //     return d.value > 20000 ? leagues[d.index] : "";
+  //   });
 
   //Tick.
   var groupTick = group.selectAll(".group-tick")
       .data(function(d){
-        return groupTicks(d,2e3*len);
+        return groupTicks(d,5e3*len);
       })
       .enter().append("g")
       .attr("class", "group-tick")
@@ -173,7 +173,7 @@ function buildChord(matrix, len = 1){
   groupTick
     .filter(function(d){
       console.log(len);
-      return d.value % 2e4 == 0;
+      return d.value % 5e4 == 0;
     })
     .append("text")
     .attr("x",8)
@@ -315,7 +315,7 @@ function loadYears(yearList, fn) {
     var count = {value: 0};
     var max = {value:0};
     yearList.forEach(function(year){
-        d3.csv("../../data/"+year+"league_transfer_fee.csv", function(error,csvData){
+        d3.csv("../../data/"+year+"_league_transfer_fee.csv", function(error,csvData){
             csvData.forEach(function(d,i){
                 var item = [];
                 for(k in d){

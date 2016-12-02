@@ -6,7 +6,7 @@ var forceDirect, leagueSelectionBar, teamSelectionBar, yearTrendDiagram, teamDet
 window.onload = function () {
     forceDirect = new ForceDirect();
 
-    d3.csv("../../data/2013_league_transfer_fee.csv", function(error, csvData){
+    d3.csv("../../data/2008-2009_league_transfer_fee.csv", function(error, csvData){
         var transferMatrix = [];
         var i = 0;
         csvData.forEach(function(d){
