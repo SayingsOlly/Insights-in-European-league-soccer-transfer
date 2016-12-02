@@ -5,7 +5,7 @@ date: "jiani@cs.utah.edu and olly@cs.utah.edu"
 output: pdf_document
 ---
 
-# Overview and Motivation
+## Overview and Motivation
 
 __Enjoying watching the European soccer league games, we want to visualize data about soccer to show the trend of soccer's development.
 Since there have been many research about the outcome of games, we decide to exploring our data from another perspective:
@@ -13,9 +13,9 @@ the transfer market which reflects not only the loyalty of players in a team but
 
 __Appreciating to the visuliazation class, we have learnt not only technical method but also many concepts and criterias of visualization. Based on the concept "overview plus detail", we build our visulization in two views, intuitive insight of the data set and more accurate qualitative details.__
 
-# Related Work
+## Related Work
 
-# Question
+## Question
 The following questions have been answered on both league level and team level:
 
   + What  are the transfer relationships between leagues or teams?
@@ -28,7 +28,7 @@ The following questinos have been answered on team level:
   + What is the order of teams sorted by the number of players transfered with (in or out) a given team in a given year or period?
   
 
-#Data
+##Data
 Our data comes from Kaggle European Soccer Database, and the link is \emph{\href{https://www.kaggle.com/hugomathien/soccer}{here}}.
 
 The data set  contains 11 European league, more than 25000 matches and at least 10000 players from season 2008 to season 2016.
@@ -36,10 +36,11 @@ The data set  contains 11 European league, more than 25000 matches and at least 
 The form of data set is several tables in sqlite database, so we plan to join the tables to get which player belongs to which team from year to year, then we can know the trasfer of players.
 
 
-#Exploratory Data Analysis
+##Exploratory Data Analysis
 
-#Design Evolution
+##Design Evolution
 
+### Initial design
 Our initial design contains three charts: a  chord diagram,  a force direct diagram, and a line chart. We choice chord diagram to show transfer relations between leagues, since this diagram is concise and space savin, comparing to  our another design where a league column has been doubled and lines are drawn between two columns such like links between levels in neural Networks. The scale is added outside the circle to avoid the quantitative shortage of the circle. 
 
 According to class vertices and edges can show relationships, the force direct diagram has been chosen to express the transfer relationship between teams. We plan to zoom in a team to show the name and the transfer numbers of that team, which is discarded in our final according to TAs' suggestion and more function has been added in this chart which will be introduced latter.  
@@ -56,24 +57,45 @@ Our initial design can be seen in Figure 1 and Figure 2.
 
 ![Page 2 of our initial design](final2.png)
 
+### Version 1
+
 We applied our design as Figure 3 and Figure 4. The chord diagram is following our original idea. The number of transfered players can be read from the scale outside the circle as well as the tooltip. When mouseover, the link become highlight and other links become light grey. As to force direct diagram, we can get the transfer relation of teams not only within a league but also among different leagues. 
 
 In this version, we can either moseover the edges or select the arc of multiple leagues from diagram 1  to filter out the teams in corresponding leagues for  diagram 2, and the selected teams are distinguished by highlighting the vertices and edges of these these teams and making other teams become translucent. However, as we can see, the  force direct diagram looks pertty messy. Too many teams (around 200 teams) interfering with  the transfer relationships of the teams we want to inspect.
 
-![figure1](chart1.png)
+![Version 1 page 1](chart1.png)
 
-![figure2](chart2.png)
-
-
-
-Besides adding more interaction with other charts, there is no large change in chord diagram from initial design. 
+![Version 1 page 2](chart2.png)
 
 
+### Version 2 
 
-#Implementation
+As shown in figure 5, the problem mentioned above has been solved by adding team selecting mechanism which can filt out teams either has been selected or has direct transfer relationship with the selected team. 
 
-#Evaluation
+Besides color changes, add league's name, and adding more interaction with other charts, there is no change in chord diagram from initial design.  The line chart with all leagues and with selected leagues are shown in Figure 6. The sum of the number of transfer-in and transfer-out has been used here, we can see the trend of the number of transfer players of leagues. There two aspect can be improved. First, since the line has been acculmulated, the value of the upper line is affacted by the value of the lower line which may lead reading errors. Sencondly, besides the sum of the number of transfer players, we may want to know the trend of the number of the player transfered in and out respectively.  In order to solve these problem, in later version we add both overlay for transfer-out to distinguish it from transfer in and values for boundaries of the overlay, which means the number of  player transferd out and transfered in respectively.
 
-#Conclusion
+![Version 2 page 1](chart3.png)
 
-#Reference
+![Version 2 page 2 with all leagues](chart4.png)
+
+
+##Implementation
+### intent and functionality
+
+The logos region shown in Figure 7 aims at selecting leagues and teams. The short ribbon under the each of the leaguer logo represents the color for that league and the long ribbon under a line of team logos indicates which league these teams belong to.
+
+![The logos region](chart5.png)
+
+
+
+### Interaction
+We pay many efforts in interaction which we think can evoke people's intresest in exploring data. In our project, all chart are correlative, which means leagues or teams can be selected in any chart and the related information will be filtered out in other chart.
+
+##Evaluation
+
+
+Interaction: every chart can ineract with each other.
+
+##Conclusion
+
+##Reference

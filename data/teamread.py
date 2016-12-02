@@ -12,7 +12,7 @@ league = list(league)
 # 	print item
 
 ########################################
-item  = league[4]
+item  = league[3]
 
 
 team = set()

@@ -1,0 +1,44 @@
+---
+title: "Untitled"
+author: "Jiani Lin and Yi Ou"
+date: "October 23, 2016"
+output: pdf_document
+---
+
+###The suggestion from Jiyuan Li and Ren Miao
+
+(1) They think our visualization are slightly commen since they have seen this kind of graph before.
+
+Not fair. It's unnecessary to use some method nobody has seen. It's more important to build good insight of data to help people get more information from data rather than pursue novel expression. Everybody know line chart, but chart can still be a good choice for every body. And even though the professor has show the similar figure when demonstrate D3, we never implement the similar figure of our figure 1 and 2 in any homework.
+
+(2) Have the doubt about using larger data set, like the world club transfer data.
+
+Unfair. Our data structe is a kind of tree sturcte Since we have 2 level, team and leagues right now. If we want to use it for world culb transfer data, we can add another level on top and add one more chart to show the imformation of the this level. As to teams, the number of teams will increase but we don't need show every thing at a same time. We can show a branch by selection rather than always put the whole tree there.
+
+(3) They said this visualiazation can be overwhelming complex as the data set creasing large. The circle line chart is good and complex but the dot-line chart below can be too complex. They suggest we redesign it to make it become a simple chart.
+
+As same as before, we can use filtering and highlight to solve this problem. Redesign is uncessary.
+
+###The suggestion form TAs
+
+(1) zoom in the first chart to show the information details 
+
+It's a helpful suggestion, we may add it to the first chart.
+
+(2) Unnecessary zoom in for the second chart. Use a tooltip instead.
+
+We will use a tooltip to show the information rather than zoom in the vertex for the second chart.
+
+(2) Don't show so many information at the same time. Add filtering for the second chart.
+
+Every helpful we may consider add filtering for the second chart after we finish the basic stuffs.
+
+###The feedback for proposal form TAs
+
+(1) It can be great if we can attach transfer cost to the player and how it improved their performance, In that case We can figure which league spent the most. 
+
+We can add it if we can find the correspoding data set.
+
+(2) If by clicking a league in your first vis we can expand it to show the teams it would be awesome.(it would be tough).
+
+Helpful. We may add it after finish basic stuffs.
