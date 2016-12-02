@@ -22,48 +22,56 @@ function ForceDirect() {
 
     this.tooltip();
 }
-ForceDirect.prototype.loadYears = function (years) {
-    var me = this;
+
+function loadTeamYears (years, fn, split) {
     var teamsM, teamTransfersM, teamNameToIndexM;
     var count = {value: 0};
     years.forEach(function(year) {
-        me.loadYear(year, null, function (teams, teamTransfers, teamNameToIndex) {
+        loadTeamYear(year, function (teams, teamTransfers, teamNameToIndex) {
             if (!teamsM) {
-                teamsM = teams;
-                teamTransfersM = teamTransfers;
+                teamsM = !split ? teams : [teams];
+                teamTransfersM = !split ? teamTransfers : [teamTransfers];
                 teamNameToIndexM = teamNameToIndex;
             } else {
-                teamsM.forEach(function (team, index) {
-                    team.transferOutValue += teams[index].transferOutValue;
-                    team.transferInValue += teams[index].transferInValue;
-                    team.value += teams[index].value;
-                });
-
-                teamTransfers.forEach(function (teamTransfer) {
-                    var cache = teamTransfersM.find(function (d) {
-                        return d.source == teamTransfer.source && d.target == teamTransfer.target;
+                if (split) {
+                    teamsM.push(teams);
+                } else
+                    teamsM.forEach(function (team, index) {
+                        team.transferOutValue += teams[index].transferOutValue;
+                        team.transferInValue += teams[index].transferInValue;
+                        team.value += teams[index].value;
                     });
-                    if (cache) {
-                        cache.value += teamTransfer.value;
-                    } else {
-                        teamTransfersM.push(teamTransfer);
-                    }
-                });
+                if (split) {
+                    teamTransfersM.push(teamTransfers);
+                } else
+                    teamTransfers.forEach(function (teamTransfer) {
+                        var cache = teamTransfersM.find(function (d) {
+                            return d.source == teamTransfer.source && d.target == teamTransfer.target;
+                        });
+                        if (cache) {
+                            cache.value += teamTransfer.value;
+                        } else {
+                            teamTransfersM.push(teamTransfer);
+                        }
+                    });
             }
             count.value++;
             if (count.value == years.length) {
-                me.teams = teamsM;
-                me.teamTransfers = teamTransfersM;
-                me.teamNameToIndex = teamNameToIndexM;
-                me.updateYear();
+                fn(teamsM, teamTransfersM, teamNameToIndexM);
             }
         });
     });
 }
-ForceDirect.prototype.loadYear = function (year, transferMatrix, fn) {
+ForceDirect.prototype.loadYears = function (years) {
     var me = this;
-
-    //var teamTransferMatrix = [];
+    loadTeamYears(years, function (teams, teamTransfers, teamNameToIndex) {
+        me.teams = teams;
+        me.teamTransfers = teamTransfers;
+        me.teamNameToIndex = teamNameToIndex;
+        me.updateYear();
+    });
+}
+ function loadTeamYear(year, fn) {
     d3.csv("../../data/team_transfer"+year+".csv", function(error, csvData){
         var teams = [],
             teamTransfers = [];
@@ -78,14 +86,6 @@ ForceDirect.prototype.loadYear = function (year, transferMatrix, fn) {
             });
             teamNameToIndex[d+""] = index;
         });
-        //
-        //teams.forEach(function(d){
-        //    var tmp = [];
-        //    teams.forEach(function(d){
-        //        tmp.push(0);
-        //    });
-        //    teamTransferMatrix.push(tmp);
-        //});
 
         csvData.forEach(function(d, index){
             for(k in d) {
@@ -104,12 +104,6 @@ ForceDirect.prototype.loadYear = function (year, transferMatrix, fn) {
                     teams[teamNameToIndex[k]].value += value;
                 }
             }
-            //
-            //var item = [];
-            //for(k in d){
-            //    item.push(d[k]*1000);
-            //}
-            //teamTransferMatrix[index] = teamTransferMatrix[index].sumArray(item);
         });
         d3.csv("../../data/season2008.csv", function(error, csvData) {
             csvData.forEach(function(d){
@@ -119,18 +113,44 @@ ForceDirect.prototype.loadYear = function (year, transferMatrix, fn) {
                     });
                 }
             });
-            //teams = teams.filter(function (d, index) {
+            //var noLeague = teams.filter(function (d) {
+            //    return d.leagueIndex == null;
+            //});
+            //noLeague.forEach(function (team) {
+            //    team.value = 0;
+            //    team.transferInValue = 0;
+            //    team.transferOutValue = 0;
+            //    teamTransfers.forEach(function (d) {
+            //        if (d.sourceD.teamIndex == team.teamIndex) {
+            //            d.targetD.value -= d.value;
+            //            d.targetD.transferInValue -= d.value;
+            //            d.value = 0;
+            //        } else if (d.targetD.teamIndex == team.teamIndex) {
+            //            d.sourceD.value -= d.value;
+            //            d.sourceD.transferOutValue -= d.value;
+            //            d.value = 0;
+            //        }
+            //    });
+            //});
+            //teamTransfers = teamTransfers.filter(function (d) {
             //    return d.value != 0;
             //});
-            if (fn) {
-                fn(teams, teamTransfers, teamNameToIndex);
-            } else {
-                me.teams = teams;
-                me.teamTransfers = teamTransfers;
-                me.teamNameToIndex = teamNameToIndex;
-                me.updateYear(transferMatrix);
-            }
+            fn(teams, teamTransfers, teamNameToIndex);
         });
+    });
+}
+ForceDirect.prototype.loadYear = function (year, transferMatrix, fn) {
+    var me = this;
+
+    loadTeamYear(year, function (teams, teamTransfers, teamNameToIndex) {
+        if (fn) {
+            fn(teams, teamTransfers, teamNameToIndex);
+        } else {
+            me.teams = teams;
+            me.teamTransfers = teamTransfers;
+            me.teamNameToIndex = teamNameToIndex;
+            me.updateYear(transferMatrix);
+        }
     });
 }
 ForceDirect.prototype.updateYear = function(matrix, showName) {
@@ -376,7 +396,7 @@ ForceDirect.prototype.tooltip = function () {
                 html += "<div style='padding: 15px;'>";
                 html += "<div>" + d.transferInValue + " transferred into this team" + "</div>";
                 inArr.forEach(function (d) {
-                    html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.targetD.leagueIndex)+"'>" + d.sourceD.name + ": " + d.value + " (" + parseInt(d.value / team.transferInValue * 100) + "%)</div>";
+                    html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.sourceD.leagueIndex)+"'>" + d.sourceD.name + ": " + d.value + " (" + parseInt(d.value / team.transferInValue * 100) + "%)</div>";
                 });
                 html += "</div>";
             }

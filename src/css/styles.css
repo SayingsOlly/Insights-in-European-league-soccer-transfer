@@ -134,22 +134,26 @@ body {
     cursor: pointer;
 }
 
-#year-trend-svg {
+#year-trend-svg,
+#team-detail-chart-svg {
     transform: scaleY(-1);
 }
 
-#year-trend-svg .labels text{
+#year-trend-svg .labels text,
+#team-detail-chart-svg .labels text {
     transform: scaleY(-1);
 }
 
-#year-trend-svg .paths path{
+#year-trend-svg .paths path,
+#team-detail-chart-svg .paths path {
     fill: none;
     stroke: white;
     stroke-width: 1.5px;
     cursor: pointer;
 }
 
-#year-trend-svg .overlay {
+#year-trend-svg .overlay,
+#team-detail-chart-svg .overlay {
     fill: grey;
     opacity: 0.5;
     cursor: pointer;
