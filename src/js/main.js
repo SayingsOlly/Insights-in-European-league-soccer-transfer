@@ -37,26 +37,7 @@ function setUp(leagues, matrix) {
     /*
      Color scale.
      */
-
-        //  utils.color = d3.scaleOrdinal()
-        // .domain(d3.range(11))
-        // .range(["#FFEB3B ", "#00FFFF", "#EF5350", "#CCFF66", "#F48FB1", "#CE93D8", "#8D6E63", "#A26229", "#5C6BC0", "#1ABC9C", "##F5B041"]);
-
- 
-      utils.color = d3.scaleOrdinal()
+    utils.color = d3.scaleOrdinal()
         .domain(d3.range(11))
-        .range(["#87CEFA",  "  #FFB2FF","#20B2AA", "#9370DB",  " #4682B4", "#9ACD32", "#FF5959","#7FFFD4", "#BC8F8F",  "#6670AD", "#E78271"]);
-
-      // utils.color = d3.scaleOrdinal()
-      //   .domain(d3.range(11))
-      //   .range(["#87CEFA",  "  #FFB2FF","#20B2AA", "#9370DB",  " #4682B4", "#9ACD32", "#FF5959","#7FFFD4", "#BC8F8F",  "#6670AD", "#E78271"]);
-
-      // utils.color = d3.scaleOrdinal()
-      //   .domain(d3.range(11))
-      //   .range(["#234928", "#AFDD89", "#957244", "#F26223", "#011227", "#C34222", "#F11223", "#A26229", "#807652", "#640928", "#E78271"]);
-
-    // utils.color = d3.scaleOrdinal()
-    //     .domain(d3.range(11))
-    //     .range(["#7FFFD4", "#FFE1FF", "#FFFF97", "#FFB2B2", "#F0C2FF", "#CCB299", "#94C7FF", "#D9FF82", " #FFD65C", "#FFC9FF", "#8CD1A3"]);
-
+        .range(["#1f78b4","#cab2d6","#b2df8a", "#33a02c",  "#fb9a99", "#e31a1c", "#fdbf6f","#ff7f00","#6a3d9a","#a6cee3", "#ffff99"]);
 }
