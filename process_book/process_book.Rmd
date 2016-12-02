@@ -18,8 +18,8 @@ __Appreciating to the visuliazation class, we have learnt not only technical met
 ## Question
 The following questions have been answered on both league level and team level:
 
-  + What is transfer netwrok between leagues or teams?
-  + What is the transfer tend?
+  + What is the transfer netwrok between leagues or teams?
+  + What is transfer tend of selected leagues or teams?
   + How many players have been transfered in a given period?
   + How much has been spent on buying players in a given period?
   + How much has a league or a team get by selling players?
@@ -132,11 +132,36 @@ There are two force direct diagrams in Figure \ref{2}, where one is for selected
   ![Line chart of leagues \label{11}](chart11.png) 
  
 ### Interaction
-We pay many efforts in interaction which we think can evoke people's intresest in exploring data. In our project, all chart are correlative, which means leagues or teams can be selected in any chart and the related information will be filtered out in other chart.  The following is a example of 
+We pay many efforts in interaction which we think can evoke people's intresest in exploring data. In our project, all chart are correlative, which means leagues or teams can be selected in any chart and the related information will be filtered out in other chart. The following examples demonstrate typlical interactions with our visualization. 
+
+
+
 ##Evaluation
 
+Allowing opean exploration, our visualization aim at helping users find transfer relationships of  leagues or teams they want to know from the messy transfer network. According to overview plus detail, we build our basic chart to give users a intuitive insight and give them accurate details by interactions like mouseover or selection. This project represents the soccer players transfer in European in two respectives (players and money) and two levels (leagues and teams), enabling to answer various transfer questions come up by different users.
+
+The chord diagram answers what is the transfer network between leagues; the force direct diagram answers what is the transfer network between teams, the line charts answers what is transfer trend of selected leagues and teams.
+
+
+: What did you learn about the data by using your visualizations? How did you answer your questions? How well does your visualization work, and how could you further improve it?
 
 Interaction: every chart can ineract with each other.
+
+
+## Question
+The following questions have been answered on both league level and team level:
+
+  + What is transfer netwrok between leagues or teams?
+  + What is the transfer tend?
+  + How many players have been transfered in a given period?
+  + How much has been spent on buying players in a given period?
+  + How much has a league or a team get by selling players?
+
+The following questinos have been answered on team level:
+  
+  + Which teams have transfer transactions with a given team or some given teams?
+  + Which team transfered the most number of player into or from a given teams?
+  + Which team paid or got most from a given team in a given period?
 
 ##Conclusion
 
