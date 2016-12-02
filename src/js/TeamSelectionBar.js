@@ -23,7 +23,6 @@ function TeamSelectionBar(forceDirect) {
 
 TeamSelectionBar.prototype.showLeagues = function (leagues) {
     this.selectedTeams = new Set();
-    forceDirect.updateYear();
     this.images.classed('not-selected', false);
     this.leagues.classed('selected', function () {
         return leagues.has(d3.select(this).attr('id').slice(5).replace(/-/gm, ' '));
