@@ -195,14 +195,14 @@ function buildChord(matrix, len = 1){
     .attr('class', 'd3-tip')
     .direction('se')
     .offset(function(){
-      return [-200,0];
+      return [0,0];
     })
     .html(function(d){
       var html = "";
-      html += "<h2>"+leagues[d.source.index]+" to "+leagues[d.target.index]+"</h2></li>";
-      html += "<h2>"+d.source.value/1000+" players</h2>";
-      html += "<h2>"+leagues[d.target.index]+" to "+leagues[d.source.index]+"</h2>";
-      html += "<h2>"+d.target.value/1000+" players</h2>";
+      html += "<div>"+leagues[d.source.index]+" to "+leagues[d.target.index]+"</div></li>";
+      html += "<div>"+d.source.value/1000+" players</div>";
+      html += "<div>"+leagues[d.target.index]+" to "+leagues[d.source.index]+"</div>";
+      html += "<div>"+d.target.value/1000+" players</div>";
 
       return html;
     });

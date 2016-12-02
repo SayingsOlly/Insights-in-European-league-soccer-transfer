@@ -31,16 +31,9 @@ body {
 }
 
 .d3-tip {
-    /*line-height: 5;*/
-    padding-left: 10px;
-    padding-right: 10px;
-    min-width: 400px;
-    border-style: groove;
-    /*padding: 12px;*/
-    background: grey;
-    color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    background: white;
     border-radius: 10px;
-    pointer-events: none;
 }
 
 .selected path{

@@ -52,7 +52,7 @@
           scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
 
       nodel.html(content)
-        .style('opacity', 1).style('pointer-events', 'all')
+        .style('opacity', 0.85).style('pointer-events', 'all')
 
       while(i--) nodel.classed(directions[i], false)
       coords = direction_callbacks.get(dir).apply(this)

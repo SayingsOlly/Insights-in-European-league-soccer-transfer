@@ -201,10 +201,12 @@ YearTrendDiagram.prototype.showLeagues = function (leagues) {
         });
 
     me.svg.select('.overlay')
+        .filter(function(d) {return d})
         .transition().duration(1300)
         .attr('d', me.overLaylineGenerator);
 
     this.svg.select('.labels').selectAll('text')
+        .filter(function(d) {return d})
         .html(function (d, i) {
             var some = i < years.length ? ' out' : ' in';//(i == years.length * 2 - 1 ? ' in' : '');
             //var some = i == 0 ? 'transfer out' : (i == years.length * 2 - 1 ? 'transfer in' : '');
