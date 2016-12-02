@@ -34,12 +34,16 @@ The following questinos have been answered on team level:
 ##Data
 Our data comes from Kaggle European Soccer Database, and the link is \emph{\href{https://www.kaggle.com/hugomathien/soccer}{here}}.
 
-The data set  contains 11 European league, more than 25000 matches and at least 10000 players from season 2008 to season 2016.
+The data set contains 11 European league, more than 25000 matches and at least 10000 players from season 2008 to season 2016.
 
-The form of data set is several tables in sqlite database, so we plan to join the tables to get which player belongs to which team from year to year, then we can know the trasfer of players.
 
+Then we plan to get insights of player transfer from a different angle, which is transfer fee, but we don't have the data in our database, so we crawled transfer fee data from \emph{\href{http://www.transfermarkt.co.uk/}{here}}, then connect it with our database.
 
 ##Exploratory Data Analysis
+
+The form of data set is several tables in sqlite database, so we plan to join the tables to get which player belongs to which team from year to year, then we can know the transfer of players for each league and each teams.
+
+'Liverpool FC': 'Liverpool'
 
 ##Design Evolution
 

@@ -315,7 +315,7 @@ function loadYears(yearList, fn) {
     var count = {value: 0};
     var max = {value:0};
     yearList.forEach(function(year){
-        d3.csv("../../data/transfer"+year+".csv", function(error,csvData){
+        d3.csv("../../data/"+year+"league_transfer_fee.csv", function(error,csvData){
             csvData.forEach(function(d,i){
                 var item = [];
                 for(k in d){
