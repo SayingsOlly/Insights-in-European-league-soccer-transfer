@@ -2,7 +2,7 @@
 title: "Insights in European league soccer players transfer"
 author: "Jiani Lin and Yi Ou"
 date: "jiani@cs.utah.edu and olly@cs.utah.edu"
-output: pdf_document
+output: html_document
 ---
 
 ## Overview and Motivation
@@ -18,14 +18,17 @@ __Appreciating to the visuliazation class, we have learnt not only technical met
 ## Question
 The following questions have been answered on both league level and team level:
 
-  + What  are the transfer relationships between leagues or teams?
+  + What is transfer netwrok between leagues or teams?
   + What is the transfer tend?
-  + How many players have been transfered in given year or given period?
+  + How many players have been transfered in a given period?
+  + How much has been spent on buying players in a given period?
+  + How much has a league or a team get by selling players?
 
 The following questinos have been answered on team level:
   
-  + Which teams have transfer transactions with a given team or some given team?
-  + What is the order of teams sorted by the number of players transfered with (in or out) a given team in a given year or period?
+  + Which teams have transfer transactions with a given team or some given teams?
+  + Which team transfered the most number of player into or from a given teams?
+  + Which team paid or got most from a given team in a given period?
   
 
 ##Data
@@ -82,9 +85,17 @@ Besides color changes, add league's name, and adding more interaction with other
 ##Implementation
 ### intent and functionality
 
+
 The logos region shown in Figure 7 aims at selecting leagues and teams. The short ribbon under the each of the leaguer logo represents the color for that league and the long ribbon under a line of team logos indicates which league these teams belong to.
 
 ![The logos region](chart5.png)
+
+The player transfer are shown in two perspectives, the number of players transfered and the amount of money spent. 
+
+In the following description, we take the player version as the example. The chord  diagram shows the player transfer between leagues. As shown in Figure \ref{1}, a curve  bewteen two leagues stands for the player transfer between these leagues and the thickness of the curve is propotional to the number of players transferd out from the league. The selected leagues or selected teams are highlight by making irrelevant curves become transparent. We can get approximate number by reading the scale outside the circle and the precise number by reading from tooltips when mouseover.
+
+
+![ Chord diagram with tooltip\label{1}](chart6.png)
 
 
 
