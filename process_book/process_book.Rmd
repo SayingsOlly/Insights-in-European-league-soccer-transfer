@@ -126,8 +126,13 @@ There are two force direct diagrams in Figure \ref{2}, where one is for selected
 
  ![Selected teams in from different leagues \label{8}](chart9.png)
  
+ The line chart of leagues are shown in Figure \ref{11}, mulitple leagues in left and one league in right. When choosing some leagues in any of chart, this line chart update and the y-axis adjust with the maximum value of the sum of the transfer players in the selected leagues. When users select some teams (or a team), this line chart will update as well, to display the trend of leagues which selected teams belong to. When we mouse over a color block of a leagure in line chart, the number of players transfered in and out are distinguished by a layer and the corresponding values are  displayed at each data point.
+ 
+ 
+  ![Line chart of leagues \label{11}](chart11.png) 
+ 
 ### Interaction
-We pay many efforts in interaction which we think can evoke people's intresest in exploring data. In our project, all chart are correlative, which means leagues or teams can be selected in any chart and the related information will be filtered out in other chart. 
+We pay many efforts in interaction which we think can evoke people's intresest in exploring data. In our project, all chart are correlative, which means leagues or teams can be selected in any chart and the related information will be filtered out in other chart.  The following is a example of 
 ##Evaluation
 
 
