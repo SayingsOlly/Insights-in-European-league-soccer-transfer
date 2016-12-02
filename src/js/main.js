@@ -1,19 +1,21 @@
 var utils = {};
 var leagues = [];
-var years = ["2008-2009","2009-2010", '2010-2011', '2011-2012', '2012-2013', '2013-2014'];
+var years = ["2008","2009", '2010', '2011', '2012', '2013'];
 var forceDirect, leagueSelectionBar, teamSelectionBar, yearTrendDiagram, teamDetailDiagram;
 
 window.onload = function () {
     forceDirect = new ForceDirect();
 
-    d3.csv("../../data/transfer2008-2009.csv", function(error, csvData){
+    d3.csv("../../data/2013_league_transfer_fee.csv", function(error, csvData){
         var transferMatrix = [];
         var i = 0;
         csvData.forEach(function(d){
             var item = [];
             for(k in d){
                 if(i==0){
-                    leagues.push(k+"");
+                  leagues.push(k+"");
+                  console.log("ad");
+                  console.log(k);
                 }
 
                 item.push(d[k]*1000);
