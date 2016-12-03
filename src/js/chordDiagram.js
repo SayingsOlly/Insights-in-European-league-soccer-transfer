@@ -326,7 +326,8 @@ function loadYears(yearList, fn) {
             });
             count.value++;
             if(count.value == yearList.length) {
-              console.log(transferMatrix);
+              //console.log(transferMatrix);
+              //buildChord(transferMatrix);
               fn(transferMatrix);
             }
         });
