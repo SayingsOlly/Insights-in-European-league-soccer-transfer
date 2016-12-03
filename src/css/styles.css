@@ -8,14 +8,81 @@ body {
   flex-wrap: wrap;
 }
 
+#youtube{
+    position:relative;
+    left: 460px;
+}
+
+#layer{
+    background-color: #000;
+    width: 100%;
+
+}
+
+.coolButton{
+    padding: 10px 40px;
+    margin: 0px 10px 10px 0px;
+    float: left;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.1s;
+    -webkit-transition: all 0.1s;
+}
+
+.coolButton:active
+{
+    transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+  border-bottom: 1px solid;
+}
+
+.navigate{
+    font: bold 11px Arial;
+    text-decoration: none;
+    background-color:#3e87ec;
+    font-color: #FFF;
+    width: 200px;
+    height: 100px;
+    padding: 2px 6px 2px 6px;
+    border-radius: 5px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+}
+
+#show-player{
+    background: url("../../data/icons/cute_boy.PNG");
+    background-size: 100% 100%;
+    position: relative;
+    left:745px;
+    height: 80px;
+    width: 80px;
+}
+
+#show-fee{
+    background: url("../../data/icons/cute_money.PNG");
+    background-size: 100% 100%;
+    position: relative;
+    left: 755px;
+    height: 80px;
+    width: 80px;
+}
 
 #header h1{
     background-image: url("../../data/icons/background_v8_s22.jpg");
-    height: 800px;
-    font-size: 50px;
-    line-height: 2000%;
+    border-radius: 25px;
+    border:0;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+
+    height: 700px;
+    width:100%;
+    font-size: 100px;
+    padding-top: 199px;
+    color:white;
     text-align: center;
-    text-shadow: 4px 3px 0px #fff, 9px 8px 0px rgba(0,0,0,0.15);
+
 }
 
 #player-or-money img{
