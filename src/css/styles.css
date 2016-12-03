@@ -10,9 +10,10 @@ body {
 
 
 #header h1{
-    height: 200px;
+    background-image: url("../../data/icons/background_v8_s22.jpg");
+    height: 800px;
     font-size: 50px;
-    line-height: 500%;
+    line-height: 2000%;
     text-align: center;
     text-shadow: 4px 3px 0px #fff, 9px 8px 0px rgba(0,0,0,0.15);
 }
