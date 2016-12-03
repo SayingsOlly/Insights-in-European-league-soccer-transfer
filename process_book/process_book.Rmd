@@ -28,22 +28,18 @@ The following questinos have been answered on team level:
   
   + Which teams have transfer transactions with a given team or some given teams?
   + Which team transfered the most number of player into or from a given teams?
-  + Which team paid or got most from a given team in a given period?
+  + Which team paid most to or got most from  a given team in a given period?
   
 
 ##Data
 Our data comes from Kaggle European Soccer Database, and the link is \emph{\href{https://www.kaggle.com/hugomathien/soccer}{here}}.
 
-The data set contains 11 European league, more than 25000 matches and at least 10000 players from season 2008 to season 2016.
+The data set  contains 11 European league, more than 25000 matches and at least 10000 players from season 2008 to season 2016.
 
+The form of data set is several tables in sqlite database, so we plan to join the tables to get which player belongs to which team from year to year, then we can know the trasfer of players.
 
-Then we plan to get insights of player transfer from a different angle, which is transfer fee, but we don't have the data in our database, so we crawled transfer fee data from \emph{\href{http://www.transfermarkt.co.uk/}{here}}, then connect it with our database.
 
 ##Exploratory Data Analysis
-
-The form of data set is several tables in sqlite database, so we plan to join the tables to get which player belongs to which team from year to year, then we can know the transfer of players for each league and each teams.
-
-'Liverpool FC': 'Liverpool'
 
 ##Design Evolution
 
@@ -140,12 +136,28 @@ We pay many efforts in interaction which we think can evoke people's intresest i
 
 Allowing opean exploration, our visualization aim at helping users find transfer relationships of  leagues or teams they want to know from the messy transfer network. According to overview plus detail, we build our basic chart to give users a intuitive insight and give them accurate details by interactions like mouseover or selection. This project represents the soccer players transfer in European in two respectives (players and money) and two levels (leagues and teams), enabling to answer various transfer questions come up by different users.
 
-The chord diagram answers what is the transfer network between leagues; the force direct diagram answers what is the transfer network between teams, the line charts answers what is transfer trend of selected leagues and teams.
+The chord diagram answers what is the transfer network between leagues; the force direct diagram answers what is the transfer network between teams, the line charts answers what is transfer trend of selected leagues and teams. The answer about the number of transfer players in a given period can be found in Figure \ref{a1}, where specific number can be by tooltips. 
+
+![ The number of transfer players in a given period \label{a1}](a1.png) 
 
 
-: What did you learn about the data by using your visualizations? How did you answer your questions? How well does your visualization work, and how could you further improve it?
+The questions about the expenditure for buying players and the imcome form selling palyer of selected league or team in a given period  can be answered in Figure \ref{a2} .
 
-Interaction: every chart can ineract with each other.
+![ the expenditure for buying players and the imcome form selling palyer of selected league or team in a given period\label{a2}](a1.png) 
+
+
+For a given team (or given teams), we can answer which teams have transfer connection with this team (or these teams) like examples in Figure \ref{12}.
+
+![ Examples of getting teams connected with given teams \label{12}](chart12.png) 
+
+The left part of Figure \ref{a3} answers which team transfered the most number of player into or from  a given team  and the right part shows  which team paid most  to or got most from a given team
+
+![ The number of transfer players in a given period \label{a3}](chart12.png) 
+
+There are many advantages in this project, like using concept of "overview plus detials" which avoid users losting in details and help them find the details easily if they want. Alghout the essential goal of this project is give users an insight of player transfer, we still pay much attantion on the accuracy of display data, like using tooltips, adding scales out of the circle and annotating numbers on the node. We spent lots of time on improving interactive experience of users. We concatenat all chart, enabling users filt out the information they want easily by few clicks.
+
+
+
 
 
 ## Question
