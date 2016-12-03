@@ -17,3 +17,5 @@ Process book and some image related to it are all in process book folder.
 # link
 
 www.eng.utah.edu/~jianil/src/chord.html
+
+https://www.youtube.com/watch?v=9Gq-jRlakQw&feature=youtu.be
