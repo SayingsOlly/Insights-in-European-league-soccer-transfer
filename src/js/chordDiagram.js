@@ -7,7 +7,7 @@ function yearChart(){
   svgWidth = yearChart.node().getBoundingClientRect().width;
   svgHeight = 60;
 
-
+  d3.select("#year-chart").select("svg").remove();
   console.log(svgWidth);
   var svg = d3.select("#year-chart").append("svg")
       .attr("width",svgWidth)
@@ -173,7 +173,7 @@ function buildChord(matrix, len = 1){
   groupTick
     .filter(function(d){
       console.log(len);
-      return d.value % 1e5 == 0;
+      return d.value % (fileName == "transfer_fee"? 1e5 : 5e4)== 0;
     })
     .append("text")
     .attr("x",8)
@@ -200,9 +200,9 @@ function buildChord(matrix, len = 1){
     .html(function(d){
       var html = "";
       html += "<div>"+leagues[d.source.index]+" to "+leagues[d.target.index]+"</div></li>";
-      html += "<div> €"+(d.source.value/1000).toFixed(2)+"</div>";
+      html += "<div> "+ (fileName == "transfer_fee"?"€":"Number of Players: ")+(d.source.value/1000).toFixed(2)+"</div>";
       html += "<div>"+leagues[d.target.index]+" to "+leagues[d.source.index]+"</div>";
-      html += "<div> €"+(d.target.value/1000).toFixed(2)+"</div>";
+      html += "<div> "+ (fileName == "transfer_fee"?"€":"Number of Players: ")+(d.target.value/1000).toFixed(2)+"</div>";
 
       return html;
     });
@@ -313,9 +313,10 @@ function loadYears(yearList, fn) {
     });
 
     var count = {value: 0};
-    var max = {value:0};
-    yearList.forEach(function(year){
-        d3.csv("../../data/"+year+"_league_transfer_fee.csv", function(error,csvData){
+  var max = {value:0};
+  console.log(fileName);
+  yearList.forEach(function(year){
+        d3.csv("../../data/league_"+fileName+""+year+".csv", function(error,csvData){
             csvData.forEach(function(d,i){
                 var item = [];
                 for(k in d){
@@ -325,7 +326,8 @@ function loadYears(yearList, fn) {
             });
             count.value++;
             if(count.value == yearList.length) {
-                fn(transferMatrix);
+              console.log(transferMatrix);
+              fn(transferMatrix);
             }
         });
     });
@@ -335,7 +337,7 @@ function setUpBrush(years, svg, svgWidth, svgHeight){
 
   var brush = d3.brushX()
       .extent([[-1,0],[svgWidth+1,40]]).on("end", brushed);
-
+  //svg.select(".brushYear").remove();
   svg.append("g").attr("class","brushYear").call(brush);
 
   function brushed(){
