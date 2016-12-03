@@ -81,6 +81,7 @@ ForceDirect.prototype.loadYears = function (years) {
                 name: d+"",
                 transferOutValue: 0,
                 transferInValue: 0,
+                transferSelfValue: 0,
                 value: 0,
                 teamIndex: index,
             });
@@ -100,8 +101,9 @@ ForceDirect.prototype.loadYears = function (years) {
                     });
                     teams[index].transferOutValue += value;
                     teams[index].value += value;
+                    index == teamNameToIndex[k] && (teams[index].transferSelfValue += value);
                     teams[teamNameToIndex[k]].transferInValue += value;
-                    teams[teamNameToIndex[k]].value += value;
+                    index != teamNameToIndex[k] && (teams[teamNameToIndex[k]].value += value);
                 }
             }
         });
@@ -295,6 +297,7 @@ ForceDirect.prototype.selectLeague = function (league, leagues) {
     this.deselectNode();
     if (leagues.size == 0) {
         this.updateYear();
+        teamDetailDiagram.reset();
     } else {
         var names = new Set();
         me.teams.forEach(function (team) {
@@ -342,6 +345,12 @@ ForceDirect.prototype.selectNodes = function (teamNames) {
     }
     //this.simulation.force("charge").strength(-4000 / (teamNames.size * 2 - 1));
     this.updateYear(null, true);
+
+    var newNameSet = new Set();
+    me.teams.forEach(function (d) {
+        newNameSet.add(d.name);
+    });
+    teamDetailDiagram.selectNodes(newNameSet);
 }
 
 ForceDirect.prototype.deselectNode = function () {
@@ -359,7 +368,11 @@ ForceDirect.prototype.deselectNode = function () {
 
 ForceDirect.prototype.tooltip = function () {
     var me = this;
-    this.tip = d3.tip()
+    this.tip = teamTooltip(this);
+}
+
+function teamTooltip(me) {
+    return d3.tip()
         .attr('class', 'd3-tip')
         .direction('s')
         .offset(function(){
@@ -376,21 +389,13 @@ ForceDirect.prototype.tooltip = function () {
                 }
             });
 
-            /**
-             * name: d+"",
-             transferOutValue: 0,
-             transferInValue: 0,
-             value: 0,
-             teamIndex: index,
-             */
-
             inArr.sort(function (a, b) { return b.value-a.value;});
             outArr.sort(function (a, b) { return b.value-a.value;});
             inArr = inArr.splice(0, 5);
             outArr = outArr.splice(0, 5);
             var html = "";
             html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.leagueIndex)+"'>"+ d.name+" "+ (team.transferInValue + team.transferOutValue)+" players transferred</div>";
-            html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.leagueIndex)+"'>League: "+ leagues[d.leagueIndex]+"</div>";
+            leagues[d.leagueIndex] && (html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.leagueIndex)+"'>League: "+ leagues[d.leagueIndex]+"</div>");
             html += "<div style='display: flex;'>";
             if (d.transferInValue != 0) {
                 html += "<div style='padding: 15px;'>";
@@ -409,18 +414,6 @@ ForceDirect.prototype.tooltip = function () {
                 html += "</div>";
             }
             html += "</div>";
-
-            /**
-             *   <div>Palermo 44 player trasnferred</div><div>(League: Italy Serie A)</div>
-             <div style="
-             display: flex;
-             "><div style="
-             padding: 15px;
-             "><div>23 trasnfer out of this team</div><div>Fiorentina: 4 (20%)</div><div>Paris Saint-Germain: 2 (10%)</div><div>Atalanta: 1 (5%)</div><div>Sunderland: 1 (5%)</div><div>Bologna: 1 (5%)</div></div><div style="
-             padding: 15px;
-             ">
-             <div>20 trasnfer into this team</div><div>Novara: 4 (20%)</div><div>Bologna: 2 (10%)</div><div>Bari: 2 (10%)</div><div>Napoli: 2 (10%)</div><div>Queens Park Rangers: 1 (5%)</div></div></div>
-             */
             return html;
         });
 }

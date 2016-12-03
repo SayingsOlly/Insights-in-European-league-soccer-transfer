@@ -45,6 +45,5 @@ TeamSelectionBar.prototype.updateTeams = function () {
         });
 
         forceDirect.selectNodes(me.selectedTeams);
-        teamDetailDiagram.selectNodes(me.selectedTeams);
     }
 }
