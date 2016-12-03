@@ -19,7 +19,7 @@ __Appreciating to the visuliazation class, we have learnt not only technical met
 The following questions have been answered on both league level and team level:
 
   + What is the transfer netwrok between leagues or teams?
-  + What is transfer trend of selected leagues or teams?
+  + What is transfer tend of selected leagues or teams?
   + How many players have been transfered in a given period?
   + How much has been spent on buying players in a given period?
   + How much has a league or a team get by selling players?
@@ -104,6 +104,9 @@ Besides color changes, add league's name, and adding more interaction with other
 ##Implementation
 ### intent and functionality
 
+Since there are two perspectives in this project, we add two icons to switch between these two  perspectives, which can be seen in Figure \ref{mp}. In this figure the player perspective has been choose (since it looks bigger) which is our default.
+
+![Player or money \label{mp}](morp.png)
 
 The logos region shown in Figure 7 aims at selecting leagues and teams. The short ribbon under the each of the leaguer logo represents the color for that league and the long ribbon under a line of team logos indicates which league these teams belong to.
 
@@ -159,10 +162,27 @@ The examples of line chart of teams are in Figure \ref{14}. As we can see, ths l
 ### Interaction
 We pay many efforts in interaction which we think can evoke people's intresest in exploring data. In our project, all chart are correlative, which means leagues or teams can be selected in any chart and the related information will be filtered out in other chart. The following examples demonstrate typlical interactions with our visualization. 
 
-First we choose a perspective among players and money
+First we choose a perspective among players and money (the default is player perspective). We can choose leagues and teams in logos region and choose year using year brush. We  chose FC Bayern Munich and Manchester United from Germany 1. Bundesliga and England Premier League respectively.
 
+![Interaction step 1 \label{i1}](i1.png) 
 
-##Evaluation
+From force direct diagram, there is a team, Real Madrid CF, linking these two team together. We decided to clicke the node of this team in the force direct diagram and the scenario as Figure \ref{i2}
+
+![Interaction step 2 \label{i2}](i2.png) 
+
+We began to inspect the transition tran of teams and find a team named Juventus, we clicked on the color block in this chart and the scanario become Figure \ref{i3}.
+
+![Interaction step 3 \label{i3}](i3.png) 
+
+Then we switched from player perspective into money perspective and looked at ransitions trend of leagues. 
+
+![Interaction step 3 \label{i4}](i4.png) 
+
+We wanted to more detials of England Premier League and clicked on the color block of this league. Therefore  England Premier Leaguethe  was selected and the scenario became Figure \ref{i5}.
+
+![Interaction step 3 \label{i5}](i5.png) 
+
+##Evaluation and Conclusion
 
 Allowing opean exploration, our visualization aim at helping users find transfer relationships of  leagues or teams they want to know from the messy transfer network. According to overview plus detail, we build our basic chart to give users a intuitive insight and give them accurate details by interactions like mouseover or selection. This project represents the soccer players transfer in European in two respectives (players and money) and two levels (leagues and teams), enabling to answer various transfer questions come up by different users.
 
@@ -190,3 +210,11 @@ As to feature work, we could  extend our project  into player level or add rank 
 
 
 ##Reference
+
+1. \href{http://bl.ocks.org/mbostock/4062006}
+
+2. \href{http://bl.ocks.org/mbostock/4062045}
+
+3. \href{https://www.kaggle.com/hugomathien/soccer}
+
+4. \href{{http://www.transfermarkt.co.uk}
