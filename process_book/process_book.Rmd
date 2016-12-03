@@ -190,3 +190,8 @@ As to feature work, we could  extend our project  into player level or add rank 
 
 
 ##Reference
+
+#1. \href{http://bl.ocks.org/mbostock/4062006}
+#2. \href{http://bl.ocks.org/mbostock/4062045}
+#3. \href{https://www.kaggle.com/hugomathien/soccer}
+#4. \href{{http://www.transfermarkt.co.uk}
