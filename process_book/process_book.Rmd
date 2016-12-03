@@ -52,12 +52,18 @@ After certain step, we found out we can't get much insights from the data we alr
 
 We found some websites which we can get the data of  soccer players transfer fee for each years, then we decide to crawl data from \emph{\href{http://www.transfermarkt.co.uk/}{TransferMarkt}}, which has the most comprehensive data we need. Then we use Python and Beautiful Soap data spider framework to crawl the data.
 
-The data we got is kind of noise since there are some data we don't need, like some loan fee data and the players transfered from outside the 11 leagues, 
+The data we got is kind of noise since there are some data we don't need, like some loan fee data and the players transfered from outside the 11 leagues. So we clean those useless data then tranform them to the matrix format same as way we transform the data from database.
+
+Using all this data, we can get a good sense of:
+
++ How much each leagues and each teams spend and earn from players transfer.
++ The difference of how many players transfers happened and how much the transfers cost in different seasons.
++ The trend of the number of players transfers and transfers fee spend.
 
 ##Design Evolution
 
 ### Initial design
-Our initial design contains three charts: a  chord diagram,  a force direct diagram, and a line chart. We choice chord diagram to show transfer relations between leagues, since this diagram is concise and space savin, comparing to  our another design where a league column has been doubled and lines are drawn between two columns such like links between levels in neural Networks. The scale is added outside the circle to avoid the quantitative shortage of the circle. 
+Our initial design contains three charts: a  chord diagram,  a force direct diagram, and a line chart. We choice chord diagram to show transfer relations between leagues, since this diagram is concise and space savin, comparing to  our another design where a league column has been doubled and lines are drawn between two columns such like links between levels in neural Networks. The scale is added outside the circle to avoid the quantitative shortage of the circle.
 
 According to class vertices and edges can show relationships, the force direct diagram has been chosen to express the transfer relationship between teams. We plan to zoom in a team to show the name and the transfer numbers of that team, which is discarded in our final according to TAs' suggestion and more function has been added in this chart which will be introduced latter.  
 
