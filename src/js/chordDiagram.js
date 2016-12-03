@@ -36,7 +36,8 @@ function yearChart(){
       return yearScale(i+0.5);
     })
     .attr("cy", "20px")
-    .attr("r", "15px");
+    .attr("r", "15px")
+    .classed('selected', function (d, i) { return i == 0; });
 
   var yearText = svg.selectAll("text").data(years);
 
