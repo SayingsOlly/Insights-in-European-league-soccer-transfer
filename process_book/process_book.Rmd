@@ -34,9 +34,13 @@ The following questinos have been answered on team level:
 ##Data
 Our data comes from Kaggle European Soccer Database, and the link is \emph{\href{https://www.kaggle.com/hugomathien/soccer}{here}}.
 
-The data set  contains 11 European league, more than 25000 matches and at least 10000 players from season 2008 to season 2016.
+The data set contains 11 European league, more than 25000 matches and at least 10000 players from season 2008 to season 2014.
 
 The form of data set is several tables in sqlite database, so we plan to join the tables to get which player belongs to which team from year to year, then we can know the trasfer of players.
+
+Then we plan to explore the insights of transfer with a different angle, which is the transfer fee among each leagues and each teams.
+
+We crawled the source data from \emph{\href{http://www.transfermarkt.co.uk/}{here}}, but the team names we got is slightly different from our database. e.g. 'Arsenal' and 'Arsenal F.C.'. So we need to find the match team between transfer fee data and the data from database, we use Levenshtein Distance algorithm to measure the similarity of two teams, if their similarity larger than a fixed threshold, then we think they are the same team.
 
 
 ##Exploratory Data Analysis
