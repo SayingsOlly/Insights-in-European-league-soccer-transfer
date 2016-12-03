@@ -19,7 +19,7 @@ __Appreciating to the visuliazation class, we have learnt not only technical met
 The following questions have been answered on both league level and team level:
 
   + What is the transfer netwrok between leagues or teams?
-  + What is transfer tend of selected leagues or teams?
+  + What is transfer trend of selected leagues or teams?
   + How many players have been transfered in a given period?
   + How much has been spent on buying players in a given period?
   + How much has a league or a team get by selling players?

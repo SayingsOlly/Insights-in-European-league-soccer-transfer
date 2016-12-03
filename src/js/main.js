@@ -8,14 +8,16 @@ var fileName = "transfer";
 window.onload = function () {
 
   d3.select("#show-player")
+    .style("width","120px")
+    .style("height", "120px")
     .on("click",function(d){
       d3.select(this)
-        .style("max-width","85px")
-        .style("max-height", "85px");
+        .style("width","120px")
+        .style("height", "120px");
 
-      d3.select("#ugly-money")
-        .style("max-width","65px")
-        .style("max-height", "65px");
+      d3.select("#show-fee")
+        .style("width","80px")
+        .style("height", "80px");
 
       console.log("asdfas");
       fileName = "transfer";
@@ -25,12 +27,12 @@ window.onload = function () {
   d3.select("#show-fee")
     .on("click", function(d){
       d3.select(this)
-        .style("max-width","85px")
-        .style("max-height", "85px");
+          .style("width","120px")
+          .style("height", "120px");
 
-      d3.select("#ugly-boy")
-        .style("max-width","65px")
-        .style("max-height", "65px");
+      d3.select("#show-player")
+          .style("width","80px")
+          .style("height", "80px");
       fileName = "transfer_fee";
       init();
     });
