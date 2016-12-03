@@ -40,10 +40,19 @@ The form of data set is several tables in sqlite database, so we plan to join th
 
 Then we plan to explore the insights of transfer with a different angle, which is the transfer fee among each leagues and each teams.
 
-We crawled the source data from \emph{\href{http://www.transfermarkt.co.uk/}{here}}, but the team names we got is slightly different from our database. e.g. 'Arsenal' and 'Arsenal F.C.'. So we need to find the match team between transfer fee data and the data from database, we use Levenshtein Distance algorithm to measure the similarity of two teams, if their similarity larger than a fixed threshold, then we think they are the same team.
-
+We crawled the source data from \emph{\href{http://www.transfermarkt.co.uk/}{here}}, but the team names we got are slightly different from our database. e.g. 'Arsenal' and 'Arsenal F.C.'. So we need to find the match team between transfer fee data and the data from database, we use Levenshtein Distance algorithm to measure the similarity of two teams, if their similarity larger than a fixed threshold, then we think they are the same team.
 
 ##Exploratory Data Analysis
+
+The database is well structure and clean, so we don't need to do data clean jobs except for just getting rid of some None value.
+
+The data is in relational data format, so first we need to join useful data schema like Player, Match, Team, League, then transfer the data to matrix format which can perfectly presents the transfer relationship among leagues and teams. Then generate a csv file to find out which teams belong to a certain league.
+
+After certain step, we found out we can't get much insights from the data we already have, which just showing how many players transfer from leagues to leagues or teams to teams, so we decide to find how much a team of a league spend or earn from players transfer.
+
+We found some websites which we can get the data of  soccer players transfer fee for each years, then we decide to crawl data from \emph{\href{http://www.transfermarkt.co.uk/}{TransferMarkt}}, which has the most comprehensive data we need. Then we use Python and Beautiful Soap data spider framework to crawl the data.
+
+The data we got is kind of noise since there are some data we don't need, like some loan fee data and the players transfered from outside the 11 leagues, 
 
 ##Design Evolution
 
