@@ -16,4 +16,4 @@ Process book and some image related to it are all in process book folder.
 
 # link
 
-www.eng.uta.edu/~jianil/src/chord.html
+www.eng.utah.edu/~jianil/src/chord.html
