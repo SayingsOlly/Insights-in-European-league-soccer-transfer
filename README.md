@@ -12,4 +12,4 @@ All data in data folder.
 
 # Process Book
 
-process book and some image related to it.
+Process book and some image related to it are all in process book folder.
