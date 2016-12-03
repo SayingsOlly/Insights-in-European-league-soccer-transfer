@@ -51,6 +51,35 @@ body {
     border-left: 1px solid #CCCCCC;
 }
 
+.nav {
+    min-width: calc(100% + 20px);
+    margin-left: -10px;
+}
+.nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.nav li {
+    float: left;
+}
+
+.nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+.nav li a:hover {
+    background-color: #111;
+}
+
 #show-player{
     background: url("../../data/icons/cute_boy.PNG");
     background-size: 100% 100%;
@@ -71,16 +100,17 @@ body {
 
 #header h1{
     background-image: url("../../data/icons/background_v8_s22.jpg");
-
-    border-radius: 25px;
     border:0;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     height: 700px;
-    width:100%;
+    width: calc(100% + 20px);
+    background-size: cover;
+    background-repeat: no-repeat;
     font-size: 100px;
+    margin: 0 -10px;
     padding-top: 199px;
-    color:white;
+    color: white;
     text-align: center;
 }
 
@@ -240,5 +270,10 @@ body {
 #team-detail-chart-svg .overlay {
     fill: grey;
     opacity: 0.5;
+    cursor: pointer;
+}
+
+#year-trend-svg text,
+#team-detail-chart-svg text {
     cursor: pointer;
 }

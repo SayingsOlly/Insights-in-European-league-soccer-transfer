@@ -337,11 +337,11 @@ ForceDirect.prototype.selectNodes = function (teamNames) {
     if (me.teams.length > 4) {
         this.forceLink.distance(100);
         this.forceManyBody.strength(-30);
-        this.forceCenter.strength(1);
+        //this.forceCenter.strength(1);
     } else {
         this.forceLink.distance(Math.max(190 / me.teams.length, 100));
         this.forceManyBody.strength(-120);
-        this.forceCenter.strength(1.5);
+        //this.forceCenter.strength(1.5);
     }
     //this.simulation.force("charge").strength(-4000 / (teamNames.size * 2 - 1));
     this.updateYear(null, true);
@@ -361,7 +361,7 @@ ForceDirect.prototype.deselectNode = function () {
         //this.simulation.force('link').distance(30);
         this.forceLink.distance(30);
         this.forceManyBody.strength(-30);
-        this.forceCenter.strength(1);
+        //this.forceCenter.strength(1);
         //this.simulation.force("charge").strength(-30);
     }
 }

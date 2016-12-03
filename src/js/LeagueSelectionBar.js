@@ -59,7 +59,6 @@ LeagueSelectionBar.prototype.updateLeague = function (downwardRobbin, downwardFo
 
     downwardRobbin && teams(indexSet, false);
     downwardForce && forceDirect.selectLeague(null, indexSet);
-    downwardTeamDetail && teamDetailDiagram.selectLeague(null, indexSet);
 }
 
 LeagueSelectionBar.prototype.reset = function () {

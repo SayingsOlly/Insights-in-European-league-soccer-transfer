@@ -7,7 +7,7 @@ var fileName = "transfer";
 
 window.onload = function () {
 
-  d3.select("#ugly-boy")
+  d3.select("#show-player")
     .on("click",function(d){
       d3.select(this)
         .style("max-width","85px")
@@ -22,7 +22,7 @@ window.onload = function () {
       init();
     });
 
-  d3.select("#ugly-money")
+  d3.select("#show-fee")
     .on("click", function(d){
       d3.select(this)
         .style("max-width","85px")
