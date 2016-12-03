@@ -92,10 +92,16 @@ The logos region shown in Figure 7 aims at selecting leagues and teams. The shor
 
 There is a time line below the logos region, we can either select one year or use brush to select multiple years. The chord diagram  and the force direct diagrams will use the data in selected period.
 
-![Time line with year brush \label{brush}](chart5.png)
+![Time line with year brush \label{brush}](yb.png)
 
 
-The player transfer are shown in two perspectives, the number of players transfered and the amount of money spent. 
+The player transfer are shown in two perspectives, the number of players transfered and the amount of money spent. The player perspective is  shown like Figure \ref{pv} and the money perspective is shown like Figure \ref{mv}
+
+![Player perspective \label{pv}](pv.png)
+
+The unit in the money is million Euros. For a give team, the number of connected teams in money version may less than it in player version, since there may be some players are loaded from another team and no money spent on buying this player.
+
+![Money  perspective \label{mv}](mv.png)
 
 In the following description, we take the player version as the example. The chord  diagram shows the player transfer between leagues. Figure \ref{1}, A curve  bewteen two leagues stands for the player transfer between these leagues and the thickness of the curve is propotional to the number of players transferd out from the league. The selected leagues or selected teams are highlight by making irrelevant curves become transparent. We can get approximate number by reading the scale outside the circle and the precise number by reading from tooltips when mouseover.
 
@@ -112,7 +118,7 @@ There are two force direct diagrams in Figure \ref{2}, where one is for selected
   + The top four teams which has the greatest players transfered out
 
 
-![Force direct diagrams with tooltip2\label{2}](chart7.png)
+![Force direct diagrams with tooltips\label{2}](chart7.png)
 
  There is a color block before each team, which indicats the league that this team belongs to. There is a percentage after each team, which means the number of players transfered from (into) this team into (from) the give team (mouse-over-team) out of the total number of playe transfered into the given team.
  
@@ -126,10 +132,15 @@ There are two force direct diagrams in Figure \ref{2}, where one is for selected
  
  
   ![Line chart of leagues \label{11}](chart11.png) 
+  
+The examples of line chart of teams are in Figure \ref{14}. As we can see, ths line chart displays all teams shown in the force direct diagram and gives the transitions trend of these teams. When mouse over a color block, besides a layer and values comes out as leagues' line chart, the name of this teams appears in the upper left corner of the line chart. When click a color block, we regard this team as selected team and update all charts as same as selscting this team in logos region or in the force direct diagram.
+
+![Line chart of tams \label{14}](chart14.png) 
  
 ### Interaction
 We pay many efforts in interaction which we think can evoke people's intresest in exploring data. In our project, all chart are correlative, which means leagues or teams can be selected in any chart and the related information will be filtered out in other chart. The following examples demonstrate typlical interactions with our visualization. 
 
+First we choose a perspective among players and money
 
 
 ##Evaluation
@@ -141,9 +152,9 @@ The chord diagram answers what is the transfer network between leagues; the forc
 ![ The number of transfer players in a given period \label{a1}](a1.png) 
 
 
-The questions about the expenditure for buying players and the imcome form selling palyer of selected league or team in a given period  can be answered in Figure \ref{a2} .
+The questions about the expenditure for buying players and the imcome form selling palyer of selected leagues or team in a given period  can be answered like the left side or the right side Figure \ref{a2} .
 
-![ the expenditure for buying players and the imcome form selling palyer of selected league or team in a given period\label{a2}](a1.png) 
+![ the expenditure for buying players and the imcome form selling palyer of selected league or team in a given period\label{a2}](a2.png) 
 
 
 For a given team (or given teams), we can answer which teams have transfer connection with this team (or these teams) like examples in Figure \ref{12}.
@@ -152,14 +163,11 @@ For a given team (or given teams), we can answer which teams have transfer conne
 
 The left part of Figure \ref{a3} answers which team transfered the most number of player into or from  a given team  and the right part shows  which team paid most  to or got most from a given team
 
-![ The number of transfer players in a given period \label{a3}](chart12.png) 
+![ The number of transfer players in a given period \label{15}](chart15.png) 
 
 There are many advantages in this project, like using concept of "overview plus detials" which avoid users losting in details and help them find the details easily if they want. Alghout the essential goal of this project is give users an insight of player transfer, we still pay much attantion on the accuracy of display data, like using tooltips, adding scales out of the circle and annotating numbers on the node. We spent lots of time on improving interactive experience of users. We concatenat all chart, which enables users filt out the information they want easily by few clicks and facilitate users exploring data. 
 
 As to feature work, we could  extend our project  into player level or add rank information to show the relationship between player transfer and teams behaviors.
 
-
-
-##Conclusion
 
 ##Reference
