@@ -10,7 +10,9 @@ body {
 
 
 #header h1{
+    height: 200px;
     font-size: 50px;
+    line-height: 500%;
     text-align: center;
     text-shadow: 4px 3px 0px #fff, 9px 8px 0px rgba(0,0,0,0.15);
 }
