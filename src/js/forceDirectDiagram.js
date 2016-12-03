@@ -72,7 +72,7 @@ ForceDirect.prototype.loadYears = function (years) {
     });
 }
  function loadTeamYear(year, fn) {
-    d3.csv("../../data/team_transfer"+year+".csv", function(error, csvData){
+    d3.csv("../../data/team_"+fileName+""+year+".csv", function(error, csvData){
         var teams = [],
             teamTransfers = [];
         var teamNameToIndex = {};
@@ -368,15 +368,11 @@ ForceDirect.prototype.deselectNode = function () {
 
 ForceDirect.prototype.tooltip = function () {
     var me = this;
-    this.tip = teamTooltip(this);
-}
-
-function teamTooltip(me) {
-    return d3.tip()
+    this.tip = d3.tip()
         .attr('class', 'd3-tip')
         .direction('s')
         .offset(function(){
-            return [100,0];//200,200];
+            return [100,0];
         })
         .html(function(d) {
             var inArr = [], outArr = [], team = d;

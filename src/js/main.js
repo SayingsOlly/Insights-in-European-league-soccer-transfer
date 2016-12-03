@@ -7,8 +7,6 @@ var fileName = "transfer";
 
 window.onload = function () {
 
-  forceDirect = new ForceDirect();
-
   d3.select("#ugly-boy")
     .on("click",function(d){
       d3.select(this)
@@ -52,6 +50,8 @@ function setUp(leagues, matrix) {
 }
 
 function init(){
+  forceDirect = new ForceDirect();
+
   d3.csv("../../data/league_"+fileName+"2008-2009.csv", function(error, csvData){
         var transferMatrix = [];
         var i = 0;

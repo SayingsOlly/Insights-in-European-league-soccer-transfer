@@ -62,6 +62,8 @@ function TeamDetailDiagram() {
             }
         });
     }, true);
+
+    me.tooltip();
 }
 TeamDetailDiagram.prototype.init = function (max) {
     this.svg = d3.select('#team-detail-chart-svg');
@@ -137,6 +139,7 @@ TeamDetailDiagram.prototype.init = function (max) {
             .style('display', 'none');
         me.svg.select('.labels').selectAll('text')
             .style('display', 'none');
+        me.tip.hide(d);
     });
 
     var newPath = this.path.enter().append('path')
@@ -180,9 +183,11 @@ TeamDetailDiagram.prototype.init = function (max) {
                     return i < years.length ? me.iScale(i) : me.iScale(2 * years.length - i - 1);
                 })
                 .attr('y', function (d, i) {
-                    return i < years.length ? (me.yAxisScale(d.acSum + d.value) - 15) : me.yAxisScale(d.acSum + d.inValue);
+                    return i < years.length ? (me.yAxisScale(d.acSum + d.value) - 12) : me.yAxisScale(d.acSum + d.inValue);
                 });
+            me.tip.show(d);
         });
+    newPath.call(this.tip);
     this.path.exit().remove();
     this.path = newPath.merge(this.path);
 
@@ -292,7 +297,20 @@ TeamDetailDiagram.prototype.selectNodes = function (teamNames) {
             return i < years.length ? me.iScale(i) : me.iScale(2 * years.length - i - 1);
         })
         .attr('y', function (d, i) {
-            return i < years.length ? (me.yAxisScale(d.acSum + d.value) - 15)  : me.yAxisScale(d.acSum + d.inValue);
+            return i < years.length ? (me.yAxisScale(d.acSum + d.value) - 12)  : me.yAxisScale(d.acSum + d.inValue);
         });
 }
-//
+
+TeamDetailDiagram.prototype.tooltip = function () {
+    this.tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .direction('ne')
+        .offset([-500, -800])
+        .html(function(d) {
+            var html = '';
+            d = d[0].team;
+            html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.leagueIndex)+"'>"+ d.name+"</div>";
+            html += "</div>";
+            return html;
+        });
+}
