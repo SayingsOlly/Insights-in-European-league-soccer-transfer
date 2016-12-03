@@ -8,6 +8,14 @@ body {
   flex-wrap: wrap;
 }
 
+#player-or-money img{
+    max-width: 65px;
+    max-height: 65px;
+    vertical-align: middle;
+    margin: 0 10px 4px;
+    cursor: pointer;
+}
+
 .view{
     display: inline-block;
     width: 100%;
