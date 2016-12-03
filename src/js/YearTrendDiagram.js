@@ -1,4 +1,7 @@
 function YearTrendDiagram() {
+    document.getElementById('year-trend-svg').innterHtml = '';
+    d3.select('#year-trend-svg').html('<g id="xAxis"></g><g id="yAxis"></g><g class="paths"></g><path class="overlay"></path><g class="labels"></g>');
+
     this.yearValues = years.map(function (d) { return parseInt(d.split('-')[0]); });
     this.yearTransferMetrix = [];
     this.leagueAcSums = [];
@@ -135,12 +138,15 @@ YearTrendDiagram.prototype.init = function (yearTransferMetrix) {
             .style('display', 'none');
     });
 
-    var newPath = this.path.enter().append('path')
-        .attr('d', this.aclineGenerator)
+    var newPath = this.path.enter().append('path');
+    this.path.exit().remove();
+    this.path = newPath.merge(this.path);
+
+    this.path.attr('d', this.aclineGenerator)
         .style('fill', function (d, i) {
             return utils.color(i);
         });
-    newPath.on('click', function (d, i) {
+    this.path.on('click', function (d, i) {
             var tmp = new Set();
             tmp.add(i);
             leagueSelectionBar.selectLeague(tmp, true, true);
@@ -167,7 +173,7 @@ YearTrendDiagram.prototype.init = function (yearTransferMetrix) {
                 .style('display', 'inherit')
                 .html(function (d, i) {
                     var some = i < years.length ? ' out' : ' in';//(i == years.length * 2 - 1 ? ' in' : '');
-                    return (i < years.length ? d.outValue : d.inValue) + some;
+                    return utils.handleDisplayValue(i < years.length ? d.outValue : d.inValue) + some;
                 })
                 .attr('x', function (d, i) {
                     return i < years.length ? me.iScale(i) : me.iScale(2 * years.length - i - 1);
@@ -176,9 +182,6 @@ YearTrendDiagram.prototype.init = function (yearTransferMetrix) {
                     return i < years.length ? me.yAxisScale(d.acSum + d.value) : me.yAxisScale(d.acSum + d.inValue);
                 });
         });
-    this.path.exit().remove();
-    this.path = newPath.merge(this.path);
-
     this.svg.select('.labels')
         .style("transform", "translate(" + 0 + "px," + svgBounds.height + "px)");
 };
@@ -210,7 +213,7 @@ YearTrendDiagram.prototype.showLeagues = function (leagues) {
         .html(function (d, i) {
             var some = i < years.length ? ' out' : ' in';//(i == years.length * 2 - 1 ? ' in' : '');
             //var some = i == 0 ? 'transfer out' : (i == years.length * 2 - 1 ? 'transfer in' : '');
-            return (i < years.length ? d.outValue : d.inValue) + some;
+            return utils.handleDisplayValue(i < years.length ? d.outValue : d.inValue) + some;
         })
         .transition().duration(1300)
         .attr('x', function (d, i) {

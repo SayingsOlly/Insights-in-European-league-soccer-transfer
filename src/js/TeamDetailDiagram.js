@@ -1,4 +1,7 @@
 function TeamDetailDiagram() {
+    document.getElementById('team-detail-chart-svg').innterHtml = '';
+    d3.select('#team-detail-chart-svg').html('<g id="xAxis"></g><g id="yAxis"></g><g class="paths"></g><path class="overlay"></path><g class="labels"></g>');
+
     this.yearValues = years.map(function (d) { return parseInt(d.split('-')[0]); });
     this.yearTransferMetrix = [];
     this.teamAcSums = [];
@@ -97,11 +100,11 @@ TeamDetailDiagram.prototype.init = function (max) {
 
     this.yScale = d3.scaleLinear()
         .domain([0, max])
-        .range([yAxisHeight, figureHeight + 20]);
+        .range([yAxisHeight, figureHeight  + 13 + 20]);
 
     this.yAxisScale = d3.scaleLinear()
         .domain([0, max])
-        .range([figureHeight, 20]);
+        .range([figureHeight + 13, 20]);
 
     this.yAxis = d3.axisLeft();
     this.yAxis.ticks(10)
@@ -177,7 +180,7 @@ TeamDetailDiagram.prototype.init = function (max) {
                 .style('display', 'inherit')
                 .html(function (d, i) {
                     var some = i < years.length ? ' out' : ' in';//(i == years.length * 2 - 1 ? ' in' : '');
-                    return (i < years.length ? d.outValue : d.inValue) + some;
+                    return utils.handleDisplayValue(i < years.length ? d.outValue : d.inValue) + some;
                 })
                 .attr('x', function (d, i) {
                     return i < years.length ? me.iScale(i) : me.iScale(2 * years.length - i - 1);
@@ -187,9 +190,9 @@ TeamDetailDiagram.prototype.init = function (max) {
                 });
             me.tip.show(d);
         });
-    newPath.call(this.tip);
     this.path.exit().remove();
     this.path = newPath.merge(this.path);
+    this.path.call(this.tip);
 
     this.svg.select('.labels')
         .style("transform", "translate(" + 0 + "px," + svgBounds.height + "px)");
@@ -290,7 +293,7 @@ TeamDetailDiagram.prototype.selectNodes = function (teamNames) {
         .html(function (d, i) {
             var some = i < years.length ? ' out' : ' in';//(i == years.length * 2 - 1 ? ' in' : '');
             //var some = i == 0 ? 'transfer out' : (i == years.length * 2 - 1 ? 'transfer in' : '');
-            return (i < years.length ? d.outValue : d.inValue) + some;
+            return utils.handleDisplayValue(i < years.length ? d.outValue : d.inValue) + some;
         })
         .transition().duration(1300)
         .attr('x', function (d, i) {

@@ -90,7 +90,7 @@ ForceDirect.prototype.loadYears = function (years) {
 
         csvData.forEach(function(d, index){
             for(k in d) {
-                var value = parseInt(d[k]);
+                var value = parseFloat(d[k]);
                 if (value != 0) {
                     teamTransfers.push({
                         source: index,
@@ -221,7 +221,7 @@ ForceDirect.prototype.updateYear = function(matrix, showName) {
     newValueText.on("click", me.selectNode.bind(me));
     valueText.exit().remove();
     valueText = newValueText.merge(valueText);
-    valueText.html(function(d) { return showName || d.value > 3 ? d.value : ""; });
+    valueText.html(function(d) { return showName || d.value > 3 ? utils.handleDisplayValue(d.value) : ""; });
 
     var text = svg.select(".nodes").selectAll("text.nameTag").data(me.teams);
     var newText = text.enter().append("text")
@@ -390,22 +390,22 @@ ForceDirect.prototype.tooltip = function () {
             inArr = inArr.splice(0, 5);
             outArr = outArr.splice(0, 5);
             var html = "";
-            html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.leagueIndex)+"'>"+ d.name+" "+ (team.transferInValue + team.transferOutValue)+" players transferred</div>";
+            html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.leagueIndex)+"'>"+ d.name+" "+ utils.handleDisplayValue(team.transferInValue + team.transferOutValue)+" players transferred</div>";
             leagues[d.leagueIndex] && (html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.leagueIndex)+"'>League: "+ leagues[d.leagueIndex]+"</div>");
             html += "<div style='display: flex;'>";
             if (d.transferInValue != 0) {
                 html += "<div style='padding: 15px;'>";
-                html += "<div>" + d.transferInValue + " transferred into this team" + "</div>";
+                html += "<div>" + utils.handleDisplayValue(d.transferInValue) + " transferred into this team" + "</div>";
                 inArr.forEach(function (d) {
-                    html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.sourceD.leagueIndex)+"'>" + d.sourceD.name + ": " + d.value + " (" + parseInt(d.value / team.transferInValue * 100) + "%)</div>";
+                    html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.sourceD.leagueIndex)+"'>" + d.sourceD.name + ": " + utils.handleDisplayValue(d.value) + " (" + parseInt(d.value / team.transferInValue * 100) + "%)</div>";
                 });
                 html += "</div>";
             }
             if (d.transferOutValue != 0) {
                 html += "<div style='padding: 15px;'>";
-                html += "<div>"+ d.transferOutValue +" transferred out of this team"+"</div>";
+                html += "<div>"+ utils.handleDisplayValue(d.transferOutValue) +" transferred out of this team"+"</div>";
                 outArr.forEach(function (d) {
-                    html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.targetD.leagueIndex)+"'>"+ d.targetD.name +": " + d.value + " ("+ parseInt(d.value/team.transferOutValue * 100) +"%)</div>";
+                    html += "<div style='padding-left: 4px; border-left: 12px solid "+utils.color(d.targetD.leagueIndex)+"'>"+ d.targetD.name +": " + utils.handleDisplayValue(d.value) + " ("+ parseInt(d.value/team.transferOutValue * 100) +"%)</div>";
                 });
                 html += "</div>";
             }
