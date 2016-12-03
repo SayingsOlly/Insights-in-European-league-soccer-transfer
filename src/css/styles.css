@@ -11,11 +11,12 @@ body {
 
 #header h1{
     background-image: url("../../data/icons/background_v8_s22.jpg");
-    height: 800px;
-    font-size: 50px;
-    line-height: 2000%;
+    height: 700px;
+    width:100%;
+    font-size: 100px;
+    padding-top: 199px;
+    color:white;
     text-align: center;
-    text-shadow: 4px 3px 0px #fff, 9px 8px 0px rgba(0,0,0,0.15);
 }
 
 #player-or-money img{
