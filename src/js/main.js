@@ -7,8 +7,6 @@ var fileName = "transfer";
 
 window.onload = function () {
 
-  forceDirect = new ForceDirect();
-
   d3.select("#ugly-boy")
     .on("click",function(d){
       d3.select(this)
@@ -49,9 +47,15 @@ function setUp(leagues, matrix) {
     utils.color = d3.scaleOrdinal()
         .domain(d3.range(11))
         .range(["#1f78b4","#cab2d6","#b2df8a", "#33a02c",  "#fb9a99", "#e31a1c", "#fdbf6f","#ff7f00","#6a3d9a","#a6cee3", "#ffff99"]);
-}
 
+    utils.handleDisplayValue = function (d) {
+        return (fileName == "transfer_fee"?"€"+(d).toFixed(2):d+"");
+    }
+}
+var FIRST_TIME = true;
 function init(){
+  forceDirect = new ForceDirect();
+
   d3.csv("../../data/league_"+fileName+"2008-2009.csv", function(error, csvData){
         var transferMatrix = [];
         var i = 0;
@@ -59,7 +63,7 @@ function init(){
             var item = [];
             for(k in d){
                 if(i==0){
-                  leagues.push(k+"");
+                    FIRST_TIME && leagues.push(k+"");
                   console.log("ad");
                   console.log(k);
                 }
@@ -69,6 +73,7 @@ function init(){
             i++;
             transferMatrix.push(item);
         });
+      FIRST_TIME = false;
 
       setUp(leagues, transferMatrix);
       yearTrendDiagram = new YearTrendDiagram();

@@ -71,18 +71,17 @@ body {
 
 #header h1{
     background-image: url("../../data/icons/background_v8_s22.jpg");
+
     border-radius: 25px;
     border:0;
     background-size: 100% 100%;
     background-repeat: no-repeat;
-
     height: 700px;
     width:100%;
     font-size: 100px;
     padding-top: 199px;
     color:white;
     text-align: center;
-
 }
 
 #player-or-money img{
