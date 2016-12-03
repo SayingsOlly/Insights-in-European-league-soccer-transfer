@@ -6,6 +6,7 @@ function TeamDetailDiagram() {
     var me = this;
 
     var count = {value: 0};
+    var max = {v:0};
     loadTeamYears(years, function (teams, teamTransfers, teamNameToIndex) {
         me.teams = teams;
         me.teamTransfers = teamTransfers;
@@ -16,17 +17,22 @@ function TeamDetailDiagram() {
 
             var sum = 0;
             var acSum = {v:0};
-            teamTransfer.forEach(function (dd) {
-                sum += dd.sourceD.teamIndex == dd.targetD.teamIndex ? 0 : (dd.value * 2);
-            });
-
+            //teamTransfer.forEach(function (dd) {
+            //    sum += dd.sourceD.teamIndex == dd.targetD.teamIndex ? 0 : (dd.value * 2);
+            //});
             d.forEach(function (team, i) {
-                var outSum = d3.sum(teamTransfer, function (dd) {
-                    return dd.sourceD.teamIndex == dd.targetD.teamIndex ? 0 : (team.teamIndex == dd.sourceD.teamIndex ? dd.value : 0);
-                });
-                var inSum = d3.sum(teamTransfer, function (dd) {
-                    return dd.sourceD.teamIndex == dd.targetD.teamIndex ? 0 : (team.teamIndex == dd.targetD.teamIndex ? dd.value : 0);
-                });
+                sum += team.value;
+            });
+            d.forEach(function (team, i) {
+                var outSum = team.transferOutValue;
+                var inSum = team.transferInValue;
+
+                //var outSum = d3.sum(teamTransfer, function (dd) {
+                //    return dd.sourceD.teamIndex == dd.targetD.teamIndex ? 0 : (team.teamIndex == dd.sourceD.teamIndex ? dd.value : 0);
+                //});
+                //var inSum = d3.sum(teamTransfer, function (dd) {
+                //    return dd.sourceD.teamIndex == dd.targetD.teamIndex ? 0 : (team.teamIndex == dd.targetD.teamIndex ? dd.value : 0);
+                //});
                 me.teamAcSums[i] || me.teamAcSums.push([]);
                 me.teamAcSums[i].push({
                     acSum: sum - acSum.v - outSum - inSum,
@@ -45,25 +51,26 @@ function TeamDetailDiagram() {
                 year: yearIndex,
             });
 
+            max.v = Math.max(max.v, sum);
             count.value++;
             if(count.value == me.yearValues.length) {
                 me.teamAcSums.forEach(function (d) {
                     d.push(me.yearValues.length - 1);
                     d.push(0);
                 });
-                me.init();
+                me.init(max.v);
             }
         });
     }, true);
 }
-TeamDetailDiagram.prototype.init = function (yearTransferMetrix) {
+TeamDetailDiagram.prototype.init = function (max) {
     this.svg = d3.select('#team-detail-chart-svg');
 
     var svgBounds = this.svg.node().getBoundingClientRect(),
         xAxisWidth = 40,
         yAxisHeight = 40,
         figureWidth = svgBounds.width - xAxisWidth - 13,
-        figureHeight = svgBounds.height - yAxisHeight,
+        figureHeight = svgBounds.height - yAxisHeight - 13,
         dataLength = years.length,
         me = this;
 
@@ -87,11 +94,11 @@ TeamDetailDiagram.prototype.init = function (yearTransferMetrix) {
         .call(xAxis);
 
     this.yScale = d3.scaleLinear()
-        .domain([0, d3.max(this.yearTransferMetrix, function (d) {return d.sumValue;})])
+        .domain([0, max])
         .range([yAxisHeight, figureHeight + 20]);
 
     this.yAxisScale = d3.scaleLinear()
-        .domain([0, d3.max(this.yearTransferMetrix, function (d) {return d.sumValue;})])
+        .domain([0, max])
         .range([figureHeight, 20]);
 
     this.yAxis = d3.axisLeft();
@@ -133,9 +140,11 @@ TeamDetailDiagram.prototype.init = function (yearTransferMetrix) {
     });
 
     var newPath = this.path.enter().append('path')
-        .attr('d', this.aclineGenerator)
-        .style('fill', function (d, i) {
-            return utils.color(i);
+        .attr('d', function (d, i) {
+            return me.aclineGenerator(d);
+        })
+        .style('fill', function (d) {
+            return utils.color(d[0].team.leagueIndex);
         })
         .style('display', function (d) {
             return d3.max(d, function (d, i) {return i < dataLength ? Math.max(d.inValue, d.outValue) : 0;}) == 0 ? 'none' : 'inherit';
@@ -171,7 +180,7 @@ TeamDetailDiagram.prototype.init = function (yearTransferMetrix) {
                     return i < years.length ? me.iScale(i) : me.iScale(2 * years.length - i - 1);
                 })
                 .attr('y', function (d, i) {
-                    return i < years.length ? me.yAxisScale(d.acSum + d.value) + 15 : me.yAxisScale(d.acSum + d.inValue);
+                    return i < years.length ? (me.yAxisScale(d.acSum + d.value) - 15) : me.yAxisScale(d.acSum + d.inValue);
                 });
         });
     this.path.exit().remove();
@@ -190,22 +199,38 @@ TeamDetailDiagram.prototype.buildACfromValue = function (teamNames) {
 
         var sum = 0;
         var acSum = {v:0};
-        teamTransfer.forEach(function (dd) {
-            if (teamNames.size == 0 || teamNames.has(dd.targetD.name) || teamNames.has(dd.sourceD.name)) {
-                sum += dd.sourceD.teamIndex == dd.targetD.teamIndex ? 0 : (dd.value * 2);
+        //teamTransfer.forEach(function (dd) {
+        //    if (teamNames.size == 0 || teamNames.has(dd.targetD.name) || teamNames.has(dd.sourceD.name)) {
+        //        sum += dd.sourceD.teamIndex == dd.targetD.teamIndex ? 0 : (dd.value);
+        //    }
+        //});
+        d.forEach(function (team, i) {
+            if (teamNames.size == 0 || teamNames.has(team.name)) {
+                sum += team.value;
             }
         });
 
         d.forEach(function (team, i) {
+            var outSum = team.transferOutValue;
+            var inSum = team.transferInValue;
             if (teamNames.size == 0 || teamNames.has(team.name)) {
-                var outSum = d3.sum(teamTransfer, function (dd) {
-                    return dd.sourceD.teamIndex == dd.targetD.teamIndex ? 0 : (team.teamIndex == dd.sourceD.teamIndex ? dd.value : 0);
-                });
-                var inSum = d3.sum(teamTransfer, function (dd) {
-                    return dd.sourceD.teamIndex == dd.targetD.teamIndex ? 0 : (team.teamIndex == dd.targetD.teamIndex ? dd.value : 0);
-                });
-                me.teamAcSums[i][yearIndex].acSum = sum - acSum.v - outSum - inSum
+                //var outSum = d3.sum(teamTransfer, function (dd) {
+                //    return dd.sourceD.teamIndex == dd.targetD.teamIndex ? 0 : (team.teamIndex == dd.sourceD.teamIndex ? dd.value : 0);
+                //});
+                //var inSum = d3.sum(teamTransfer, function (dd) {
+                //    return dd.sourceD.teamIndex == dd.targetD.teamIndex ? 0 : (team.teamIndex == dd.targetD.teamIndex ? dd.value : 0);
+                //});
+                me.teamAcSums[i][yearIndex].acSum = sum - acSum.v - outSum - inSum;
+                me.teamAcSums[i][yearIndex].outValue = outSum;
+                me.teamAcSums[i][yearIndex].inValue = inSum;
+                me.teamAcSums[i][yearIndex].value = outSum + inSum;
                 acSum.v += outSum + inSum;
+                console.log(me.yAxisScale(me.teamAcSums[i][yearIndex].acSum +  outSum + inSum));
+            } else {
+                me.teamAcSums[i][yearIndex].acSum = sum - acSum.v;
+                me.teamAcSums[i][yearIndex].inValue = 0;
+                me.teamAcSums[i][yearIndex].outValue = 0;
+                me.teamAcSums[i][yearIndex].value = 0;
             }
         });
         max.v = Math.max(max.v, sum);
@@ -229,12 +254,8 @@ TeamDetailDiagram.prototype.buildACfromValue = function (teamNames) {
 //        this.selectNodes(names);
 //    }
 //}
-
-TeamDetailDiagram.prototype.selectNode = function (d) {
-    var nameSet = new Set();
-    nameSet.add(d.name);
-    this.selectNodes(nameSet);
-    leagueSelectionBar.selectTeam(d.leagueIndex, d.name);
+TeamDetailDiagram.prototype.reset = function () {
+    this.selectNodes(new Set());
 }
 
 TeamDetailDiagram.prototype.selectNodes = function (teamNames) {
@@ -248,10 +269,10 @@ TeamDetailDiagram.prototype.selectNodes = function (teamNames) {
         .call(this.yAxis);
 
     this.path.style('display', function (d, i) {
-        return teamNames.size == 0 || teamNames.has(d.name) ? 'inherit' : 'none';
+        return teamNames.size == 0 || teamNames.has(d[0].team.name) ? 'inherit' : 'none';
     }).transition().duration(1300)
         .attr('d', function (d, i) {
-            return teamNames.size == 0 || teamNames.has(d.name) ? me.aclineGenerator(d) : '';
+            return teamNames.size == 0 || teamNames.has(d[0].team.name) ? me.aclineGenerator(d) : '';
         });
 
     me.svg.select('.overlay')
@@ -271,6 +292,7 @@ TeamDetailDiagram.prototype.selectNodes = function (teamNames) {
             return i < years.length ? me.iScale(i) : me.iScale(2 * years.length - i - 1);
         })
         .attr('y', function (d, i) {
-            return i < years.length ? me.yAxisScale(d.acSum + d.value) + 15 : me.yAxisScale(d.acSum + d.inValue);
+            return i < years.length ? (me.yAxisScale(d.acSum + d.value) - 15)  : me.yAxisScale(d.acSum + d.inValue);
         });
 }
+//

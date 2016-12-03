@@ -154,26 +154,11 @@ The left part of Figure \ref{a3} answers which team transfered the most number o
 
 ![ The number of transfer players in a given period \label{a3}](chart12.png) 
 
-There are many advantages in this project, like using concept of "overview plus detials" which avoid users losting in details and help them find the details easily if they want. Alghout the essential goal of this project is give users an insight of player transfer, we still pay much attantion on the accuracy of display data, like using tooltips, adding scales out of the circle and annotating numbers on the node. We spent lots of time on improving interactive experience of users. We concatenat all chart, enabling users filt out the information they want easily by few clicks.
+There are many advantages in this project, like using concept of "overview plus detials" which avoid users losting in details and help them find the details easily if they want. Alghout the essential goal of this project is give users an insight of player transfer, we still pay much attantion on the accuracy of display data, like using tooltips, adding scales out of the circle and annotating numbers on the node. We spent lots of time on improving interactive experience of users. We concatenat all chart, which enables users filt out the information they want easily by few clicks and facilitate users exploring data. 
+
+As to feature work, we could  extend our project  into player level or add rank information to show the relationship between player transfer and teams behaviors.
 
 
-
-
-
-## Question
-The following questions have been answered on both league level and team level:
-
-  + What is transfer netwrok between leagues or teams?
-  + What is the transfer tend?
-  + How many players have been transfered in a given period?
-  + How much has been spent on buying players in a given period?
-  + How much has a league or a team get by selling players?
-
-The following questinos have been answered on team level:
-  
-  + Which teams have transfer transactions with a given team or some given teams?
-  + Which team transfered the most number of player into or from a given teams?
-  + Which team paid or got most from a given team in a given period?
 
 ##Conclusion
 
